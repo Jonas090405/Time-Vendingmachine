@@ -9,13 +9,12 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Jersey+10&family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet">
-  
 </head>
 <body>
   <div class="vending-machine">
     <div class="screen">
       KAPSELAUTOMAT v0.1<br>
-      Bitte gib eine Aktiviät und wie viel Zeit pro Woche du mit ihr verbringst an.
+      Bitte gib eine Aktivität und wie viel Zeit pro Woche du mit ihr verbringst an.
     </div>
     <div class="input-group">
       <label for="activity">Aktivität:</label>
@@ -27,10 +26,22 @@
     </div>
     <button id="submit">Daten übertragen</button>
 
+    <!-- Kapsel Container (hidden initially) -->
+    <div id="capsule-container" style="display:none;">
+      <img id="capsule" src="placeholder-capsule.png" alt="Kapsel" style="cursor:pointer;">
+      <div id="teddy-container" style="display:none;">
+        <img src="placeholder-teddy.png" alt="Kuscheltier" style="width: 50px;">
+        <p style="font-size: 10px;">Das Kuscheltier liest vor...</p>
+      </div>
+      <div id="result" style="margin-top: 16px; font-size: 10px;"></div>
+      <button id="back-button">Zurück</button>
+    </div>
+
     <div id="dice-container" style="display:none;">
       <button id="dice" style="font-size: 12px;">Würfeln</button>
       <div id="result" style="margin-top: 16px; font-size: 10px;"></div>
     </div>
   </div>
+  
 </body>
 </html>
