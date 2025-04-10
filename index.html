@@ -1,13 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Time Vendingmachine
-    </title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kapselautomat Interface</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jersey+10&family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet">
+  
 </head>
 <body>
-    
+  <div class="vending-machine">
+    <div class="screen">
+      KAPSELAUTOMAT v0.1<br>
+      Bitte gib eine Aktiviät und wie viel Zeit pro Woche du mit ihr verbringst an.
+    </div>
+    <div class="input-group">
+      <label for="activity">Aktivität:</label>
+      <input type="text" id="activity" placeholder="z.B. Lesen">
+    </div>
+    <div class="input-group">
+      <label for="time">Stunden pro Woche:</label>
+      <input type="number" id="time" placeholder="z.B. 5">
+    </div>
+    <button id="submit">Daten übertragen</button>
+
+    <div id="dice-container" style="display:none;">
+      <button id="dice" style="font-size: 12px;">Würfeln</button>
+      <div id="result" style="margin-top: 16px; font-size: 10px;"></div>
+    </div>
+  </div>
 </body>
 </html>
-
