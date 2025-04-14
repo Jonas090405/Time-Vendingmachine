@@ -27,9 +27,9 @@
     <button id="submit">Daten übertragen</button>
 
     <!-- Kapsel Container (hidden initially) -->
-    <div id="capsule-container" style="display:none;">
-      <img id="capsule" src="placeholder-capsule.png" alt="Kapsel" style="cursor:pointer;">
-      <div id="teddy-container" style="display:none;">
+    <div id="capsule-container" style="display:none; width: 320px; height: 320px; overflow: hidden;">
+      <img id="capsule" src="capsulesprite.jpg" alt="Kapsel" style="cursor:pointer; width: 960px; height: 320px; object-fit: none; object-position: 0 0;">
+          <div id="teddy-container" style="display:none;">
         <img src="placeholder-teddy.png" alt="Kuscheltier" style="width: 50px;">
         <p style="font-size: 10px;">Das Kuscheltier liest vor...</p>
       </div>
@@ -42,6 +42,11 @@
       <div id="result" style="margin-top: 16px; font-size: 10px;"></div>
     </div>
   </div>
+    <!-- Container für das Drachenplüschtier als IMG -->
+  <div id="dragon-container">
+    <img id="dragon" src="dragon-sprite.png" alt="Drachenplüschtier" style="display: none;" />
+  </div>
+
   
 </body>
 </html>
