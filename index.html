@@ -26,27 +26,27 @@
     </div>
     <button id="submit">Daten übertragen</button>
 
-    <!-- Kapsel Container (hidden initially) -->
-    <div id="capsule-container" style="display:none; width: 320px; height: 320px; overflow: hidden;">
-      <img id="capsule" src="capsulesprite.jpg" alt="Kapsel" style="cursor:pointer; width: 960px; height: 320px; object-fit: none; object-position: 0 0;">
-          <div id="teddy-container" style="display:none;">
-        <img src="placeholder-teddy.png" alt="Kuscheltier" style="width: 50px;">
-        <p style="font-size: 10px;">Das Kuscheltier liest vor...</p>
-      </div>
-      <div id="result" style="margin-top: 16px; font-size: 10px;"></div>
-      <button id="back-button">Zurück</button>
-    </div>
-
     <div id="dice-container" style="display:none;">
       <button id="dice" style="font-size: 12px;">Würfeln</button>
       <div id="result" style="margin-top: 16px; font-size: 10px;"></div>
     </div>
   </div>
-    <!-- Container für das Drachenplüschtier als IMG -->
-  <div id="dragon-container">
-    <img id="dragon" src="dragon-sprite.png" alt="Drachenplüschtier" style="display: none;" />
+
+  <!-- Kapsel außerhalb des Automaten -->
+  <div id="capsule-container">
+    <img id="capsule" src="capsulesprite.jpg" alt="Kapsel">
+    <div id="teddy-container">
+    </div>
+    <div id="result"></div>
+    <button id="back-button" style="display: none;">Zurück</button>
   </div>
 
-  
-</body>
+  <!-- Drachen außerhalb -->
+  <div id="dragon-container">
+    <img id="dragon" src="Dragonsprite.png" alt="Drachenplüschtier" />
+  </div>
+  <div id="speech-bubble" style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #fff; border: 2px solid #000; padding: 10px; border-radius: 10px;">
+    <span id="speech-text"></span>
+  </div>
+  </body>
 </html>

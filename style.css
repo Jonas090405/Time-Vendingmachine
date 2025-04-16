@@ -3,15 +3,15 @@ body {
   font-family: "Jersey 10", sans-serif;
   padding: 20px;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  height: 100vh;
   margin: 0;
+  min-height: 100vh;
 }
 
 .vending-machine {
-  width: 600px;  /* Angepasste Breite des Automaten */
-  height: 800px;  /* Angepasste Höhe des Automaten */
+  width: 600px;
+  height: 350px;
   background-color: #d3d3d3;
   border: 8px solid #333;
   image-rendering: pixelated;
@@ -26,7 +26,7 @@ body {
 .screen {
   background-color: #222;
   color: #0f0;
-  font-size: 14px;  /* Schriftgröße angepasst */
+  font-size: 14px;
   width: 100%;
   padding: 16px;
   box-sizing: border-box;
@@ -47,9 +47,10 @@ label {
   font-size: 12px;
 }
 
-input[type="text"], input[type="number"] {
+input[type="text"],
+input[type="number"] {
   padding: 10px;
-  font-size: 14px;  /* Schriftgröße der Eingabefelder angepasst */
+  font-size: 14px;
   border: 2px solid #000;
   background-color: #fff;
   font-family: "Jersey 10", sans-serif;
@@ -58,7 +59,7 @@ input[type="text"], input[type="number"] {
 button {
   margin-top: 16px;
   padding: 12px;
-  font-size: 14px;  /* Schriftgröße des Buttons angepasst */
+  font-size: 14px;
   background-color: #555;
   color: white;
   border: 2px solid #000;
@@ -67,11 +68,54 @@ button {
   width: 100%;
 }
 
-#capsule-placeholder {
+#capsule-container {
+  width: 320px;
+  height: 320px;
+  overflow: hidden;
   margin-top: 20px;
-  cursor: pointer;
-  max-width: 80%;  /* Die Kapselgröße angepasst */
+  flex-direction: column;
+  align-items: center;
+  display: none; /* <-- ganz am Ende setzen */
 }
+
+
+
+#capsule {
+  cursor: pointer;
+  width: 960px;
+  height: 320px;
+  object-fit: none;
+  object-position: 0 0;
+}
+
+#teddy-container {
+  display: none;
+}
+
+#teddy-container p {
+  font-size: 10px;
+  margin-top: 10px;
+}
+
+#result {
+  margin-top: 16px;
+  font-size: 10px;
+}
+
+#back-button {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  padding: 10px 20px;
+  background-color: #444;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  z-index: 10;
+  font-size: 1rem;
+}
+
 
 #dice-container {
   display: none;
@@ -79,23 +123,33 @@ button {
   text-align: center;
 }
 
-#teddy {
-  margin-top: 10px;
-  width: 60px;
+#dragon-container {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  width: 442px;
+  height: 482px;
+  overflow: hidden;
 }
 
-#back-button {
-  margin-top: 16px;
-  padding: 12px;
-  font-size: 14px;  /* Schriftgröße des Zurück-Buttons angepasst */
-  background-color: #555;
-  color: white;
-  border: 2px solid #000;
-  cursor: pointer;
-  font-family: "Jersey 10", sans-serif;
-  width: 100%;
+#dragon {
+  display: none;
+  object-fit: none;
+  object-position: 0 0;
 }
 
-#submit, .input-group {
-  transition: opacity 0.3s ease;
+
+.speech-bubble {
+  position: absolute;
+  background: white;
+  border: 2px solid #ccc;
+  border-radius: 12px;
+  padding: 10px;
+  max-width: 300px;
+  top: 50px; /* Position nach Bedarf anpassen */
+  left: 50%; /* Mitte des Containers */
+  transform: translateX(-50%);
+  font-family: sans-serif;
+  font-size: 16px;
+  box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
 }

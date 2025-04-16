@@ -1,4 +1,4 @@
-let comparisonText = ''; // Globale Deklaration von comparisonText
+let comparisonText = '';
 let activity = '';
 let time = '';
 
@@ -17,10 +17,9 @@ document.getElementById('submit').addEventListener('click', function () {
     let hoursPerWeek = parseInt(time);
     let lifeExpectancy = 81;
     let hoursPerYear = 8760;
-    let totalHoursInLife = hoursPerYear * lifeExpectancy;
     let totalActivityHoursInLife = hoursPerWeek * 52 * lifeExpectancy;
 
-    comparisonText = '';
+    // Auswahl des Vergleichs
     let randomComparison = Math.floor(Math.random() * 7);
 
     switch (randomComparison) {
@@ -54,7 +53,11 @@ document.getElementById('submit').addEventListener('click', function () {
         break;
     }
 
-    screen.innerHTML = `Kapsel für Aktivität: ${activity} <br> Deine Eingabe: ${time} Stunden pro Woche. <br> Berechnung läuft...`;
+    // Der Vergleichstext wird in der Konsole ausgegeben
+    console.log(comparisonText);
+
+    // Anzeige der Kapsel und Text aktualisieren
+    screen.innerHTML = `Kapsel für Aktivität: ${activity} <br> Deine Eingabe: ${time} Stunden pro Woche. <br> öffne deine Kapsel!`;
 
     submitButton.style.display = 'none';
     inputGroup.forEach(group => group.style.display = 'none');
@@ -62,24 +65,27 @@ document.getElementById('submit').addEventListener('click', function () {
     capsuleContainer.style.display = 'block';
     diceContainer.style.display = 'none';
 
-    // Stelle sicher, dass die Kapsel wieder sichtbar ist (wichtig für Wiederholungen)
-    document.getElementById('capsule').style.display = 'block';
+    const capsule = document.getElementById('capsule');
+    capsule.style.display = 'block';
+    capsule.style.objectPosition = '0 0';
+    capsule.style.pointerEvents = 'auto'; // Aktivieren, wenn die Kapsel wiederholt klickbar sein soll
 
-    // Verstecke Teddy und Ergebnis beim neuen Start
     document.getElementById('teddy-container').style.display = 'none';
-    result.innerHTML = '';
+    result.innerHTML = '';  // Der Text wird hier nicht mehr angezeigt
   } else {
     screen.innerHTML = 'Bitte alle Felder ausfüllen!';
   }
 });
 
+// Kapsel Klick-Event
 document.getElementById('capsule').addEventListener('click', function () {
   const capsule = document.getElementById('capsule');
   const result = document.getElementById('result');
   const teddyContainer = document.getElementById('teddy-container');
   const screen = document.querySelector('.screen');
+  const dragon = document.getElementById('dragon');
+  const speechBubble = document.getElementById('speech-bubble'); // Sprechblase
 
-  // Setze die Kapsel auf nicht klickbar, um Doppelklick zu verhindern
   capsule.style.pointerEvents = 'none';
 
   let frame = 0;
@@ -87,29 +93,55 @@ document.getElementById('capsule').addEventListener('click', function () {
   const frameWidth = 320;
   const frameDuration = 300;
 
-  const animation = setInterval(() => {
+  // Animation der Kapsel
+  const capsuleAnim = setInterval(() => {
     const offsetX = -frame * frameWidth;
     capsule.style.objectPosition = `${offsetX}px 0`;
 
     frame++;
 
     if (frame >= totalFrames) {
-      clearInterval(animation);
+      clearInterval(capsuleAnim);
 
       setTimeout(() => {
         capsule.style.display = 'none';
         teddyContainer.style.display = 'block';
-        result.innerHTML = `Wenn du dein Leben damit verbringen würdest, ${activity} zu machen, könntest du stattdessen: <br><strong>${comparisonText}</strong>`;
-        screen.innerHTML = `Berechnung abgeschlossen! Öffne deine Kapsel der Erkenntnis! 🎉`;
+        
+        // Der Vergleichstext wird in der Konsole weiterhin ausgegeben
+        console.log(`Wenn du dein Leben damit verbringen würdest, ${activity} zu machen, könntest du stattdessen: \n${comparisonText}`);
 
-        // Stelle sicher, dass die Kapsel wieder klickbar ist und der pointer-events Stil entfernt wird
-        capsule.style.pointerEvents = 'auto';
-      }, 700); // kurze Pause nach letzter Frame
+        // Sprechblase anzeigen und Text einfügen
+        speechBubble.style.display = 'block';  // Sprechblase anzeigen
+        document.getElementById('speech-text').textContent = comparisonText;  // Vergleichstext in die Sprechblase setzen
+
+        screen.innerHTML = `Berechnung abgeschlossen!`;
+
+        // Drachenanimation für 10 Sekunden starten
+        dragon.style.display = 'block';
+        animateDragon(4, 453.9, 200, 10000);
+      }, 700);
     }
   }, frameDuration);
 });
 
-// Zurücksetzen auf den ersten Bildschirm nach der Berechnung
+// Drachenanimation
+function animateDragon(totalFrames, frameWidth, frameDuration, totalTime) {
+  const dragon = document.getElementById('dragon');
+  let currentFrame = 0;
+
+  const interval = setInterval(() => {
+    const offsetX = -currentFrame * frameWidth;
+    dragon.style.objectPosition = `${offsetX}px 0`;
+    currentFrame = (currentFrame + 1) % totalFrames;
+  }, frameDuration);
+
+  setTimeout(() => {
+    clearInterval(interval);
+    dragon.style.objectPosition = '0 0';
+  }, totalTime);
+}
+
+// Zurück-Button für das Formular
 document.getElementById('back-button').addEventListener('click', function () {
   let submitButton = document.getElementById('submit');
   let activityInput = document.getElementById('activity');
@@ -119,25 +151,27 @@ document.getElementById('back-button').addEventListener('click', function () {
   let teddyContainer = document.getElementById('teddy-container');
   let screen = document.querySelector('.screen');
   let result = document.getElementById('result');
+  let capsule = document.getElementById('capsule');
+  let dragon = document.getElementById('dragon');
+  let speechBubble = document.getElementById('speech-bubble'); // Sprechblase zurücksetzen
 
-  // Zeige alle Eingabefelder und den Button wieder an
   submitButton.style.display = 'block';
   inputGroup.forEach(group => group.style.display = 'flex');
 
-  // Verstecke Kapsel und Kuscheltier
   capsuleContainer.style.display = 'none';
   teddyContainer.style.display = 'none';
   result.innerHTML = '';
-
-  // Setze Eingabefelder zurück
   activityInput.value = '';
   timeInput.value = '';
-
-  // Setze den Bildschirmtext zurück
   screen.innerHTML = 'KAPSELAUTOMAT v0.1<br>Bitte gib eine Aktivität und wie viel Zeit pro Woche du mit ihr verbringst an.';
 
-  // Kapsel für den nächsten Durchlauf wieder anzeigen und Sprite zurücksetzen
-  let capsule = document.getElementById('capsule');
   capsule.style.display = 'block';
-  capsule.style.objectPosition = '0 0'; // Setze Sprite zurück auf den ersten Frame
+  capsule.style.objectPosition = '0 0';
+  capsule.style.pointerEvents = 'auto'; // Wieder klickbar!
+
+  dragon.style.display = 'none';
+  dragon.style.objectPosition = '0 0';
+
+  // Sprechblase ausblenden
+  speechBubble.style.display = 'none';
 });
