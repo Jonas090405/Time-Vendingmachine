@@ -2,6 +2,20 @@ let comparisonText = '';
 let activity = '';
 let time = '';
 
+// Typewriter-Funktion
+function typeWriterEffect(element, text, speed = 50) {
+  let i = 0;
+  element.textContent = '';
+  function type() {
+    if (i < text.length) {
+      element.textContent += text.charAt(i);
+      i++;
+      setTimeout(type, speed);
+    }
+  }
+  type();
+}
+
 document.getElementById('submit').addEventListener('click', function () {
   activity = document.getElementById('activity').value;
   time = document.getElementById('time').value;
@@ -16,7 +30,6 @@ document.getElementById('submit').addEventListener('click', function () {
   if (activity && time) {
     let hoursPerWeek = parseInt(time);
     let lifeExpectancy = 81;
-    let hoursPerYear = 8760;
     let totalActivityHoursInLife = hoursPerWeek * 52 * lifeExpectancy;
 
     // Auswahl des Vergleichs
@@ -56,7 +69,6 @@ document.getElementById('submit').addEventListener('click', function () {
     // Der Vergleichstext wird in der Konsole ausgegeben
     console.log(comparisonText);
 
-    // Anzeige der Kapsel und Text aktualisieren
     screen.innerHTML = `Kapsel für Aktivität: ${activity} <br> Deine Eingabe: ${time} Stunden pro Woche. <br> öffne deine Kapsel!`;
 
     submitButton.style.display = 'none';
@@ -68,10 +80,10 @@ document.getElementById('submit').addEventListener('click', function () {
     const capsule = document.getElementById('capsule');
     capsule.style.display = 'block';
     capsule.style.objectPosition = '0 0';
-    capsule.style.pointerEvents = 'auto'; // Aktivieren, wenn die Kapsel wiederholt klickbar sein soll
+    capsule.style.pointerEvents = 'auto';
 
     document.getElementById('teddy-container').style.display = 'none';
-    result.innerHTML = '';  // Der Text wird hier nicht mehr angezeigt
+    result.innerHTML = '';
   } else {
     screen.innerHTML = 'Bitte alle Felder ausfüllen!';
   }
@@ -84,7 +96,8 @@ document.getElementById('capsule').addEventListener('click', function () {
   const teddyContainer = document.getElementById('teddy-container');
   const screen = document.querySelector('.screen');
   const dragon = document.getElementById('dragon');
-  const speechBubble = document.getElementById('speech-bubble'); // Sprechblase
+  const speechBubble = document.getElementById('speech-bubble');
+  const speechTextElement = document.getElementById('speech-text');
 
   capsule.style.pointerEvents = 'none';
 
@@ -93,7 +106,6 @@ document.getElementById('capsule').addEventListener('click', function () {
   const frameWidth = 320;
   const frameDuration = 300;
 
-  // Animation der Kapsel
   const capsuleAnim = setInterval(() => {
     const offsetX = -frame * frameWidth;
     capsule.style.objectPosition = `${offsetX}px 0`;
@@ -106,17 +118,14 @@ document.getElementById('capsule').addEventListener('click', function () {
       setTimeout(() => {
         capsule.style.display = 'none';
         teddyContainer.style.display = 'block';
-        
-        // Der Vergleichstext wird in der Konsole weiterhin ausgegeben
+
         console.log(`Wenn du dein Leben damit verbringen würdest, ${activity} zu machen, könntest du stattdessen: \n${comparisonText}`);
 
-        // Sprechblase anzeigen und Text einfügen
-        speechBubble.style.display = 'block';  // Sprechblase anzeigen
-        document.getElementById('speech-text').textContent = comparisonText;  // Vergleichstext in die Sprechblase setzen
+        speechBubble.style.display = 'block';
+        typeWriterEffect(speechTextElement, comparisonText, 50);
 
         screen.innerHTML = `Berechnung abgeschlossen!`;
 
-        // Drachenanimation für 10 Sekunden starten
         dragon.style.display = 'block';
         animateDragon(4, 453.9, 200, 10000);
       }, 700);
@@ -126,11 +135,11 @@ document.getElementById('capsule').addEventListener('click', function () {
 
 // Drachenanimation
 function animateDragon(totalFrames, frameWidth, frameDuration, totalTime) {
-  const dragon = document.getElementById('dragon');
+  let dragon = document.getElementById('dragon');
   let currentFrame = 0;
 
-  const interval = setInterval(() => {
-    const offsetX = -currentFrame * frameWidth;
+  let interval = setInterval(() => {
+    let offsetX = -currentFrame * frameWidth;
     dragon.style.objectPosition = `${offsetX}px 0`;
     currentFrame = (currentFrame + 1) % totalFrames;
   }, frameDuration);
@@ -141,7 +150,7 @@ function animateDragon(totalFrames, frameWidth, frameDuration, totalTime) {
   }, totalTime);
 }
 
-// Zurück-Button für das Formular
+// Zurück-Button
 document.getElementById('back-button').addEventListener('click', function () {
   let submitButton = document.getElementById('submit');
   let activityInput = document.getElementById('activity');
@@ -153,7 +162,7 @@ document.getElementById('back-button').addEventListener('click', function () {
   let result = document.getElementById('result');
   let capsule = document.getElementById('capsule');
   let dragon = document.getElementById('dragon');
-  let speechBubble = document.getElementById('speech-bubble'); // Sprechblase zurücksetzen
+  let speechBubble = document.getElementById('speech-bubble');
 
   submitButton.style.display = 'block';
   inputGroup.forEach(group => group.style.display = 'flex');
@@ -167,11 +176,10 @@ document.getElementById('back-button').addEventListener('click', function () {
 
   capsule.style.display = 'block';
   capsule.style.objectPosition = '0 0';
-  capsule.style.pointerEvents = 'auto'; // Wieder klickbar!
+  capsule.style.pointerEvents = 'auto';
 
   dragon.style.display = 'none';
   dragon.style.objectPosition = '0 0';
 
-  // Sprechblase ausblenden
   speechBubble.style.display = 'none';
 });
