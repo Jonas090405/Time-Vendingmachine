@@ -2,7 +2,7 @@ let comparisonText = '';
 let activity = '';
 let time = '';
 
-// Typewriter-Funktion
+// Typewriter-Effekt
 function typeWriterEffect(element, text, speed = 50) {
   let i = 0;
   element.textContent = '';
@@ -32,7 +32,6 @@ document.getElementById('submit').addEventListener('click', function () {
     let lifeExpectancy = 81;
     let totalActivityHoursInLife = hoursPerWeek * 52 * lifeExpectancy;
 
-    // Auswahl des Vergleichs
     let randomComparison = Math.floor(Math.random() * 7);
 
     switch (randomComparison) {
@@ -54,22 +53,21 @@ document.getElementById('submit').addEventListener('click', function () {
         break;
       case 4:
         let worldTrips = totalActivityHoursInLife / (24 * 365);
-        comparisonText = `In dieser Zeit könntest du ${worldTrips.toFixed(1)} Mal um die Welt reisen – und dabei immer wieder deine Lieblingsserie nachholen!`;
+        comparisonText = `In dieser Zeit könntest du ${worldTrips.toFixed(1)} Mal um die Welt reisen!`;
         break;
       case 5:
         let hamburgers = totalActivityHoursInLife / 0.2;
-        comparisonText = `In dieser Zeit könntest du so viele Hamburger essen, dass du ${hamburgers.toFixed(1)} Hamburger verschlingen würdest!`;
+        comparisonText = `In dieser Zeit könntest du ${hamburgers.toFixed(1)} Hamburger essen!`;
         break;
       case 6:
         let islandDays = totalActivityHoursInLife / (24 * 365);
-        comparisonText = `Mit dieser Zeit könntest du ${islandDays.toFixed(1)} Jahre lang auf einer Insel leben und den Sonnenuntergang jeden Tag genießen!`;
+        comparisonText = `Mit dieser Zeit könntest du ${islandDays.toFixed(1)} Jahre auf einer Insel leben!`;
         break;
     }
 
-    // Der Vergleichstext wird in der Konsole ausgegeben
     console.log(comparisonText);
 
-    screen.innerHTML = `Kapsel für Aktivität: ${activity} <br> Deine Eingabe: ${time} Stunden pro Woche. <br> öffne deine Kapsel!`;
+    screen.innerHTML = `Kapsel für Aktivität: ${activity} <br> Deine Eingabe: ${time} Stunden pro Woche. <br> Öffne deine Kapsel!`;
 
     submitButton.style.display = 'none';
     inputGroup.forEach(group => group.style.display = 'none');
@@ -84,12 +82,14 @@ document.getElementById('submit').addEventListener('click', function () {
 
     document.getElementById('teddy-container').style.display = 'none';
     result.innerHTML = '';
+
+    document.getElementById('back-button').style.display = 'none';
   } else {
     screen.innerHTML = 'Bitte alle Felder ausfüllen!';
   }
 });
 
-// Kapsel Klick-Event
+// Kapsel-Klick-Event
 document.getElementById('capsule').addEventListener('click', function () {
   const capsule = document.getElementById('capsule');
   const result = document.getElementById('result');
@@ -98,6 +98,7 @@ document.getElementById('capsule').addEventListener('click', function () {
   const dragon = document.getElementById('dragon');
   const speechBubble = document.getElementById('speech-bubble');
   const speechTextElement = document.getElementById('speech-text');
+  const backButton = document.getElementById('back-button');
 
   capsule.style.pointerEvents = 'none';
 
@@ -128,6 +129,12 @@ document.getElementById('capsule').addEventListener('click', function () {
 
         dragon.style.display = 'block';
         animateDragon(4, 453.9, 200, 10000);
+
+        backButton.style.display = 'block';
+
+        // Interface ausblenden!
+        document.querySelector('.vending-machine').style.display = 'none';
+
       }, 700);
     }
   }, frameDuration);
@@ -163,6 +170,7 @@ document.getElementById('back-button').addEventListener('click', function () {
   let capsule = document.getElementById('capsule');
   let dragon = document.getElementById('dragon');
   let speechBubble = document.getElementById('speech-bubble');
+  let backButton = document.getElementById('back-button');
 
   submitButton.style.display = 'block';
   inputGroup.forEach(group => group.style.display = 'flex');
@@ -182,4 +190,8 @@ document.getElementById('back-button').addEventListener('click', function () {
   dragon.style.objectPosition = '0 0';
 
   speechBubble.style.display = 'none';
+  backButton.style.display = 'none';
+
+  // Interface wieder zeigen!
+  document.querySelector('.vending-machine').style.display = 'flex';
 });
