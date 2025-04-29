@@ -1,7 +1,8 @@
-let comparisonText = '';
-let time = 5; // Startwert
-const maxTime = 168;
-const minTime = 1;
+comparisonText = '';
+time = 5; // Anfangswert
+minTime = 1;
+maxTime = 40;
+
 
 const figure = document.getElementById('figure');
 const timeValue = document.getElementById('time-value');
