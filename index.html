@@ -8,45 +8,64 @@
   <script src="script.js" defer></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Jersey+10&family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Jersey+10&display=swap" rel="stylesheet">
 </head>
 <body>
   <div class="vending-machine">
     <div class="screen">
-      KAPSELAUTOMAT v0.1<br>
-      Bitte gib eine Aktivität und wie viel Zeit pro Woche du mit ihr verbringst an.
+      KAPSELAUTOMAT v0.4<br>
+      Überlege dir eine Aktivität!<br>
+      Steuere die Figur mit den Pfeiltasten!
     </div>
-    <div class="input-group">
-      <label for="activity">Aktivität:</label>
-      <input type="text" id="activity" placeholder="z.B. Lesen">
-    </div>
+
     <div class="input-group">
       <label for="time">Stunden pro Woche:</label>
-      <input type="number" id="time" placeholder="z.B. 5">
+      <div id="scale-container">
+        <div id="scale"></div>
+        <div id="figure">🚶‍♂️</div> <!-- Die Figur -->
+      </div>
+      <div id="time-display"><span id="time-value">5</span> Stunden</div>
     </div>
-    <button id="submit">Daten übertragen</button>
+
+    <button id="submit">Bestätigen</button>
 
     <div id="dice-container" style="display:none;">
-      <button id="dice" style="font-size: 12px;">Würfeln</button>
       <div id="result" style="margin-top: 16px; font-size: 10px;"></div>
     </div>
   </div>
 
-  <!-- Kapsel außerhalb des Automaten -->
   <div id="capsule-container">
     <img id="capsule" src="capsulesprite.jpg" alt="Kapsel">
-    <div id="teddy-container">
-    </div>
+    <div id="teddy-container"></div>
     <div id="result"></div>
     <button id="back-button" style="display: none;">Zurück</button>
   </div>
 
-  <!-- Drachen außerhalb -->
+<!-- Sound für Kapsel erscheinen -->
+<audio id="capsule-appear">
+  <source src="capsule-appear.wav" type="audio/wav">
+  Dein Browser unterstützt das Audio-Element nicht.
+</audio>
+
+<!-- Sound für Kapsel öffnen -->
+<audio id="capsule-open">
+  <source src="capsule-open.wav" type="audio/wav">
+  Dein Browser unterstützt das Audio-Element nicht.
+</audio>
+
+<!-- Sound für das Tippen des Textes -->
+<audio id="plushy-talk" loop>
+  <source src="plushy-talk.wav" type="audio/wav">
+  Dein Browser unterstützt das Audio-Element nicht.
+</audio>
+
+
   <div id="dragon-container">
     <img id="dragon" src="Dragonsprite.png" alt="Drachenplüschtier" />
   </div>
-  <div id="speech-bubble" style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #fff; border: 2px solid #000; padding: 10px; border-radius: 10px;">
+
+  <div id="speech-bubble" style="display: none;">
     <span id="speech-text"></span>
   </div>
-  </body>
+</body>
 </html>

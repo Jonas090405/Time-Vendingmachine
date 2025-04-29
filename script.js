@@ -1,25 +1,39 @@
 let comparisonText = '';
-let activity = '';
-let time = '';
+let time = 5; // Startwert
+const maxTime = 168;
+const minTime = 1;
 
-// Typewriter-Effekt
-function typeWriterEffect(element, text, speed = 50) {
-  let i = 0;
-  element.textContent = '';
-  function type() {
-    if (i < text.length) {
-      element.textContent += text.charAt(i);
-      i++;
-      setTimeout(type, speed);
-    }
-  }
-  type();
+const figure = document.getElementById('figure');
+const timeValue = document.getElementById('time-value');
+
+// Figur auf Skala aktualisieren
+function updateFigurePosition() {
+  const percentage = (time - minTime) / (maxTime - minTime) * 100;
+  figure.style.left = `calc(${percentage}% - 15px)`;
+  timeValue.textContent = time;
 }
 
-document.getElementById('submit').addEventListener('click', function () {
-  activity = document.getElementById('activity').value;
-  time = document.getElementById('time').value;
+// Tastensteuerung
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'ArrowLeft') {
+    if (time > minTime) {
+      time--;
+      updateFigurePosition();
+    }
+  } else if (event.key === 'ArrowRight') {
+    if (time < maxTime) {
+      time++;
+      updateFigurePosition();
+    }
+  }
+});
 
+// Initiale Position setzen
+updateFigurePosition();
+
+// Ab hier dein bekannter Code für "submit" und "Kapsel öffnen"...
+
+document.getElementById('submit').addEventListener('click', function () {
   let screen = document.querySelector('.screen');
   let diceContainer = document.getElementById('dice-container');
   let result = document.getElementById('result');
@@ -27,7 +41,7 @@ document.getElementById('submit').addEventListener('click', function () {
   let submitButton = document.getElementById('submit');
   let inputGroup = document.querySelectorAll('.input-group');
 
-  if (activity && time) {
+  if (time) {
     let hoursPerWeek = parseInt(time);
     let lifeExpectancy = 81;
     let totalActivityHoursInLife = hoursPerWeek * 52 * lifeExpectancy;
@@ -37,37 +51,35 @@ document.getElementById('submit').addEventListener('click', function () {
     switch (randomComparison) {
       case 0:
         let bachelors = totalActivityHoursInLife / (360 * 52);
-        comparisonText = `Mit der Zeit, die du für ${activity} aufwendest, könntest du etwa ${bachelors.toFixed(1)} Bachelorabschlüsse machen!`;
+        comparisonText = `Anstatt deine Aktivität auszuführen, könntest du etwa ${bachelors.toFixed(1)} Bachelorabschlüsse machen!`;
         break;
       case 1:
         let monthsWatchingCats = totalActivityHoursInLife / (24 * 30);
-        comparisonText = `In dieser Zeit könntest du ${monthsWatchingCats.toFixed(1)} Monate lang nonstop Katzenvideos anschauen!`;
+        comparisonText = `Anstatt deine Aktivität auszuführen, könntest du ${monthsWatchingCats.toFixed(1)} Monate lang nonstop Katzenvideos schauen!`;
         break;
       case 2:
         let booksRead = totalActivityHoursInLife / 10;
-        comparisonText = `In dieser Zeit könntest du etwa ${booksRead.toFixed(1)} Bücher lesen – und trotzdem nicht alle guten finden!`;
+        comparisonText = `Anstatt deine Aktivität auszuführen, könntest du etwa ${booksRead.toFixed(1)} Bücher lesen!`;
         break;
       case 3:
         let seriesSeasons = totalActivityHoursInLife / 500;
-        comparisonText = `Mit dieser Zeit könntest du alle Staffeln deiner Lieblingsserie schauen – mindestens ${seriesSeasons.toFixed(1)} mal!`;
+        comparisonText = `Anstatt deine Aktivität auszuführen, könntest du deine Lieblingsserie ${seriesSeasons.toFixed(1)} mal komplett schauen!`;
         break;
       case 4:
         let worldTrips = totalActivityHoursInLife / (24 * 365);
-        comparisonText = `In dieser Zeit könntest du ${worldTrips.toFixed(1)} Mal um die Welt reisen!`;
+        comparisonText = `Anstatt deine Aktivität auszuführen, könntest du ${worldTrips.toFixed(1)} Mal um die Welt reisen!`;
         break;
       case 5:
         let hamburgers = totalActivityHoursInLife / 0.2;
-        comparisonText = `In dieser Zeit könntest du ${hamburgers.toFixed(1)} Hamburger essen!`;
+        comparisonText = `Anstatt deine Aktivität auszuführen, könntest du ${hamburgers.toFixed(1)} Hamburger essen!`;
         break;
       case 6:
         let islandDays = totalActivityHoursInLife / (24 * 365);
-        comparisonText = `Mit dieser Zeit könntest du ${islandDays.toFixed(1)} Jahre auf einer Insel leben!`;
+        comparisonText = `Anstatt deine Aktivität auszuführen, könntest du ${islandDays.toFixed(1)} Jahre auf einer Insel leben!`;
         break;
     }
 
-    console.log(comparisonText);
-
-    screen.innerHTML = `Kapsel für Aktivität: ${activity} <br> Deine Eingabe: ${time} Stunden pro Woche. <br> Öffne deine Kapsel!`;
+    screen.innerHTML = `Überlege dir eine Aktivität! <br> Deine Wahl: ${time} Stunden pro Woche.<br> Öffne deine Kapsel!`;
 
     submitButton.style.display = 'none';
     inputGroup.forEach(group => group.style.display = 'none');
@@ -82,14 +94,18 @@ document.getElementById('submit').addEventListener('click', function () {
 
     document.getElementById('teddy-container').style.display = 'none';
     result.innerHTML = '';
-
     document.getElementById('back-button').style.display = 'none';
-  } else {
-    screen.innerHTML = 'Bitte alle Felder ausfüllen!';
+
+    // Den ersten Sound abspielen, wenn die Kapsel erscheint
+    const capsuleSound = document.getElementById('capsule-appear');
+    if (capsuleSound) {
+      capsuleSound.play(); // Abspielen des ersten Sounds
+    } else {
+      console.warn('Das "capsule-appear"-Audioelement wurde nicht gefunden!');
+    }
   }
 });
 
-// Kapsel-Klick-Event
 document.getElementById('capsule').addEventListener('click', function () {
   const capsule = document.getElementById('capsule');
   const result = document.getElementById('result');
@@ -110,88 +126,67 @@ document.getElementById('capsule').addEventListener('click', function () {
   const capsuleAnim = setInterval(() => {
     const offsetX = -frame * frameWidth;
     capsule.style.objectPosition = `${offsetX}px 0`;
-
     frame++;
-
     if (frame >= totalFrames) {
       clearInterval(capsuleAnim);
-
       setTimeout(() => {
         capsule.style.display = 'none';
         teddyContainer.style.display = 'block';
-
-        console.log(`Wenn du dein Leben damit verbringen würdest, ${activity} zu machen, könntest du stattdessen: \n${comparisonText}`);
-
         speechBubble.style.display = 'block';
-        typeWriterEffect(speechTextElement, comparisonText, 50);
-
+        typeWriterEffect(speechTextElement, comparisonText, 50); // Tippen des Textes mit Sound
         screen.innerHTML = `Berechnung abgeschlossen!`;
-
         dragon.style.display = 'block';
-        animateDragon(4, 453.9, 200, 10000);
-
+        animateDragon(4, 453.9, 200, 5000);
         backButton.style.display = 'block';
-
-        // Interface ausblenden!
         document.querySelector('.vending-machine').style.display = 'none';
-
       }, 700);
     }
   }, frameDuration);
+
+  // Den zweiten Sound abspielen, wenn die Kapsel geöffnet wird
+  const openCapsuleSound = document.getElementById('capsule-open');
+  if (openCapsuleSound) {
+    openCapsuleSound.play(); // Abspielen des zweiten Sounds
+  } else {
+    console.warn('Das "capsule-open"-Audioelement wurde nicht gefunden!');
+  }
 });
 
-// Drachenanimation
 function animateDragon(totalFrames, frameWidth, frameDuration, totalTime) {
   let dragon = document.getElementById('dragon');
   let currentFrame = 0;
-
   let interval = setInterval(() => {
     let offsetX = -currentFrame * frameWidth;
     dragon.style.objectPosition = `${offsetX}px 0`;
     currentFrame = (currentFrame + 1) % totalFrames;
   }, frameDuration);
-
   setTimeout(() => {
     clearInterval(interval);
     dragon.style.objectPosition = '0 0';
   }, totalTime);
 }
 
-// Zurück-Button
 document.getElementById('back-button').addEventListener('click', function () {
-  let submitButton = document.getElementById('submit');
-  let activityInput = document.getElementById('activity');
-  let timeInput = document.getElementById('time');
-  let inputGroup = document.querySelectorAll('.input-group');
-  let capsuleContainer = document.getElementById('capsule-container');
-  let teddyContainer = document.getElementById('teddy-container');
-  let screen = document.querySelector('.screen');
-  let result = document.getElementById('result');
-  let capsule = document.getElementById('capsule');
-  let dragon = document.getElementById('dragon');
-  let speechBubble = document.getElementById('speech-bubble');
-  let backButton = document.getElementById('back-button');
-
-  submitButton.style.display = 'block';
-  inputGroup.forEach(group => group.style.display = 'flex');
-
-  capsuleContainer.style.display = 'none';
-  teddyContainer.style.display = 'none';
-  result.innerHTML = '';
-  activityInput.value = '';
-  timeInput.value = '';
-  screen.innerHTML = 'KAPSELAUTOMAT v0.1<br>Bitte gib eine Aktivität und wie viel Zeit pro Woche du mit ihr verbringst an.';
-
-  capsule.style.display = 'block';
-  capsule.style.objectPosition = '0 0';
-  capsule.style.pointerEvents = 'auto';
-
-  dragon.style.display = 'none';
-  dragon.style.objectPosition = '0 0';
-
-  speechBubble.style.display = 'none';
-  backButton.style.display = 'none';
-
-  // Interface wieder zeigen!
-  document.querySelector('.vending-machine').style.display = 'flex';
+  location.reload();
 });
+
+// Typing Effect für den Text
+function typeWriterEffect(element, text, speed = 50) {
+  let i = 0;
+  element.textContent = ''; // Löscht den vorhandenen Text
+  const typingSound = document.getElementById('plushy-talk'); // Sound für das Tippen
+  const loopSound = () => {
+    typingSound.currentTime = 0; // Setzt den Sound zurück
+    typingSound.play(); // Spielt den Sound ab
+  };
+
+  function type() {
+    if (i < text.length) {
+      element.textContent += text.charAt(i);
+      loopSound(); // Sound während des Schreibens abspielen
+      i++;
+      setTimeout(type, speed);
+    }
+  }
+  type();
+}
