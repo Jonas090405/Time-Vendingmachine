@@ -1,38 +1,43 @@
-comparisonText = '';
-time = 5; // Anfangswert
-minTime = 1;
-maxTime = 40;
+let comparisonText = '';
+let time = 5;
+let minTime = 1;
+let maxTime = 40;
 
+let figure = document.getElementById('figure');
+let timeValue = document.getElementById('time-value');
 
-const figure = document.getElementById('figure');
-const timeValue = document.getElementById('time-value');
+const capsuleSprites = [
+  { src: "capsulesprite.jpg", frameWidth: 320, totalFrames: 3 },
+  { src: "capsulesprite2.jpg", frameWidth: 320, totalFrames: 4 },
+  { src: "capsulesprite3.jpg", frameWidth: 320, totalFrames: 5 }
+];
 
-// Figur auf Skala aktualisieren
+const dragonSprites = [
+  { src: "Dragonsprite.png", frameWidth: 453.9, totalFrames: 4 },
+  { src: "dragon2.png", frameWidth: 480, totalFrames: 6 },
+  { src: "dragon3.png", frameWidth: 500, totalFrames: 5 }
+];
+
+let selectedCapsule = capsuleSprites[Math.floor(Math.random() * capsuleSprites.length)];
+let selectedDragon = dragonSprites[Math.floor(Math.random() * dragonSprites.length)];
+
 function updateFigurePosition() {
-  const percentage = (time - minTime) / (maxTime - minTime) * 100;
+  let percentage = (time - minTime) / (maxTime - minTime) * 100;
   figure.style.left = `calc(${percentage}% - 15px)`;
   timeValue.textContent = time;
 }
 
-// Tastensteuerung
 document.addEventListener('keydown', (event) => {
-  if (event.key === 'ArrowLeft') {
-    if (time > minTime) {
-      time--;
-      updateFigurePosition();
-    }
-  } else if (event.key === 'ArrowRight') {
-    if (time < maxTime) {
-      time++;
-      updateFigurePosition();
-    }
+  if (event.key === 'ArrowLeft' && time > minTime) {
+    time--;
+    updateFigurePosition();
+  } else if (event.key === 'ArrowRight' && time < maxTime) {
+    time++;
+    updateFigurePosition();
   }
 });
 
-// Initiale Position setzen
 updateFigurePosition();
-
-// Ab hier dein bekannter Code für "submit" und "Kapsel öffnen"...
 
 document.getElementById('submit').addEventListener('click', function () {
   let screen = document.querySelector('.screen');
@@ -41,15 +46,13 @@ document.getElementById('submit').addEventListener('click', function () {
   let capsuleContainer = document.getElementById('capsule-container');
   let submitButton = document.getElementById('submit');
   let inputGroup = document.querySelectorAll('.input-group');
+  let capsule = document.getElementById('capsule');
 
   if (time) {
     let hoursPerWeek = parseInt(time);
     let lifeExpectancy = 81;
     let totalActivityHoursInLife = hoursPerWeek * 52 * lifeExpectancy;
-
-
-    // Zufälliger Vergleich
-    let randomComparison = Math.floor(Math.random() * 9); // Zufällige Zahl zwischen 0 und 8
+    let randomComparison = Math.floor(Math.random() * 9);
 
     switch (randomComparison) {
       case 0:
@@ -88,80 +91,64 @@ document.getElementById('submit').addEventListener('click', function () {
         let minecraftHardcoreRuns = totalActivityHoursInLife / 50; // Minecraft Hardcore dauert ~50 Stunden
         comparisonText = `Du könntest Minecraft Hardcore etwa ${minecraftHardcoreRuns.toFixed(1)} Mal durchspielen – inklusive Redstone-Farmen und Netherite-Beacon.`;
         break;
-    }
-    
-
-    screen.innerHTML = `Überlege dir eine Aktivität! <br> Deine Wahl: ${time} Stunden pro Woche.<br> Öffne deine Kapsel!`;
-
-    submitButton.style.display = 'none';
-    inputGroup.forEach(group => group.style.display = 'none');
-
-    capsuleContainer.style.display = 'block';
-    diceContainer.style.display = 'none';
-
-    const capsule = document.getElementById('capsule');
+      }
+    capsule.src = selectedCapsule.src;
     capsule.style.display = 'block';
     capsule.style.objectPosition = '0 0';
     capsule.style.pointerEvents = 'auto';
 
+    screen.innerHTML = `Zeitangabe: ${time} Stunden pro Woche.<br><br> Öffne deine Kapsel!`;
+
+    submitButton.style.display = 'none';
+    inputGroup.forEach(group => group.style.display = 'none');
+    capsuleContainer.style.display = 'block';
+    diceContainer.style.display = 'none';
     document.getElementById('teddy-container').style.display = 'none';
     result.innerHTML = '';
     document.getElementById('back-button').style.display = 'none';
 
-    // Den ersten Sound abspielen, wenn die Kapsel erscheint
-    const capsuleSound = document.getElementById('capsule-appear');
-    if (capsuleSound) {
-      capsuleSound.play(); // Abspielen des ersten Sounds
-    } else {
-      console.warn('Das "capsule-appear"-Audioelement wurde nicht gefunden!');
-    }
+    document.getElementById('capsule-appear')?.play();
   }
 });
 
 document.getElementById('capsule').addEventListener('click', function () {
-  const capsule = document.getElementById('capsule');
-  const result = document.getElementById('result');
-  const teddyContainer = document.getElementById('teddy-container');
-  const screen = document.querySelector('.screen');
-  const dragon = document.getElementById('dragon');
-  const speechBubble = document.getElementById('speech-bubble');
-  const speechTextElement = document.getElementById('speech-text');
-  const backButton = document.getElementById('back-button');
+  let capsule = document.getElementById('capsule');
+  let screen = document.querySelector('.screen');
+  let dragon = document.getElementById('dragon');
+  let speechBubble = document.getElementById('speech-bubble');
+  let speechTextElement = document.getElementById('speech-text');
+  let backButton = document.getElementById('back-button');
 
   capsule.style.pointerEvents = 'none';
 
   let frame = 0;
-  const totalFrames = 3;
-  const frameWidth = 320;
-  const frameDuration = 300;
-
-  const capsuleAnim = setInterval(() => {
-    const offsetX = -frame * frameWidth;
+  let capsuleAnim = setInterval(() => {
+    let offsetX = -frame * selectedCapsule.frameWidth;
     capsule.style.objectPosition = `${offsetX}px 0`;
     frame++;
-    if (frame >= totalFrames) {
+    if (frame >= selectedCapsule.totalFrames) {
       clearInterval(capsuleAnim);
       setTimeout(() => {
         capsule.style.display = 'none';
-        teddyContainer.style.display = 'block';
-        speechBubble.style.display = 'block';
-        typeWriterEffect(speechTextElement, comparisonText, 50); // Tippen des Textes mit Sound
-        screen.innerHTML = `Berechnung abgeschlossen!`;
+
+        // Nur der zufällige animierte Drache wird angezeigt
+        dragon.src = selectedDragon.src;
+        dragon.style.objectPosition = '0 0';
         dragon.style.display = 'block';
-        animateDragon(4, 453.9, 200, 5000);
+
+        animateDragon(selectedDragon.totalFrames, selectedDragon.frameWidth, 200, 5000);
+
+        speechBubble.style.display = 'block';
+        typeWriterEffect(speechTextElement, comparisonText, 50);
+
+        screen.innerHTML = `Berechnung abgeschlossen!`;
         backButton.style.display = 'block';
         document.querySelector('.vending-machine').style.display = 'none';
       }, 700);
     }
-  }, frameDuration);
+  }, 300);
 
-  // Den zweiten Sound abspielen, wenn die Kapsel geöffnet wird
-  const openCapsuleSound = document.getElementById('capsule-open');
-  if (openCapsuleSound) {
-    openCapsuleSound.play(); // Abspielen des zweiten Sounds
-  } else {
-    console.warn('Das "capsule-open"-Audioelement wurde nicht gefunden!');
-  }
+  document.getElementById('capsule-open')?.play();
 });
 
 function animateDragon(totalFrames, frameWidth, frameDuration, totalTime) {
@@ -182,22 +169,27 @@ document.getElementById('back-button').addEventListener('click', function () {
   location.reload();
 });
 
-// Typing Effect für den Text
 function typeWriterEffect(element, text, speed = 50) {
   let i = 0;
-  element.textContent = ''; // Löscht den vorhandenen Text
-  const typingSound = document.getElementById('plushy-talk'); // Sound für das Tippen
-  const loopSound = () => {
-    typingSound.currentTime = 0; // Setzt den Sound zurück
-    typingSound.play(); // Spielt den Sound ab
-  };
-
+  element.textContent = '';
+  let typingSound = document.getElementById('plushy-talk');
+  function loopSound() {
+    if (typingSound) {
+      typingSound.currentTime = 0;
+      typingSound.play();
+    }
+  }
   function type() {
     if (i < text.length) {
       element.textContent += text.charAt(i);
-      loopSound(); // Sound während des Schreibens abspielen
+      loopSound();
       i++;
       setTimeout(type, speed);
+    } else {
+      if (typingSound) {
+        typingSound.pause();
+        typingSound.currentTime = 0;
+      }
     }
   }
   type();
