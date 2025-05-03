@@ -47,38 +47,49 @@ document.getElementById('submit').addEventListener('click', function () {
     let lifeExpectancy = 81;
     let totalActivityHoursInLife = hoursPerWeek * 52 * lifeExpectancy;
 
-    let randomComparison = Math.floor(Math.random() * 7);
+
+    // Zufälliger Vergleich
+    let randomComparison = Math.floor(Math.random() * 9); // Zufällige Zahl zwischen 0 und 8
 
     switch (randomComparison) {
       case 0:
-        let bachelors = totalActivityHoursInLife / (360 * 52);
-        comparisonText = `Anstatt deine Aktivität auszuführen, könntest du etwa ${bachelors.toFixed(1)} Bachelorabschlüsse machen!`;
+        let bachelors = totalActivityHoursInLife / (4000 * 52); // Ein Bachelor dauert ca. 4000 Stunden pro Semester
+        comparisonText = `Damit könntest du etwa ${bachelors.toFixed(1)} Bachelorabschlüsse machen.`;
         break;
       case 1:
-        let monthsWatchingCats = totalActivityHoursInLife / (24 * 30);
-        comparisonText = `Anstatt deine Aktivität auszuführen, könntest du ${monthsWatchingCats.toFixed(1)} Monate lang nonstop Katzenvideos schauen!`;
+        let monthsWatchingCats = totalActivityHoursInLife / (24 * 30); // 1 Monat Katzenvideos schauen
+        comparisonText = `Das reicht für ${monthsWatchingCats.toFixed(1)} Monate nonstop Katzenvideos.`;
         break;
       case 2:
-        let booksRead = totalActivityHoursInLife / 10;
-        comparisonText = `Anstatt deine Aktivität auszuführen, könntest du etwa ${booksRead.toFixed(1)} Bücher lesen!`;
+        let tinderDates = totalActivityHoursInLife / 2; // Ein Tinder-Date dauert ca. 2 Stunden
+        comparisonText = `Genug Zeit für etwa ${tinderDates.toFixed(1)} Tinder-Dates – und trotzdem 0 Matches.`;
         break;
       case 3:
-        let seriesSeasons = totalActivityHoursInLife / 500;
-        comparisonText = `Anstatt deine Aktivität auszuführen, könntest du deine Lieblingsserie ${seriesSeasons.toFixed(1)} mal komplett schauen!`;
+        let netflixMovies = totalActivityHoursInLife / 2; // Ein durchschnittlicher Film dauert ca. 2 Stunden
+        comparisonText = `Reicht für etwa ${netflixMovies.toFixed(1)} Netflix-Filme (falls du dich irgendwann entscheiden kannst).`;
         break;
       case 4:
-        let worldTrips = totalActivityHoursInLife / (24 * 365);
-        comparisonText = `Anstatt deine Aktivität auszuführen, könntest du ${worldTrips.toFixed(1)} Mal um die Welt reisen!`;
+        let worldTrips = totalActivityHoursInLife / (24 * 400); // Eine Weltreise dauert ca. 1 Jahr
+        comparisonText = `Damit könntest du ${worldTrips.toFixed(1)} Mal um die Welt reisen.`;
         break;
       case 5:
-        let hamburgers = totalActivityHoursInLife / 0.2;
-        comparisonText = `Anstatt deine Aktivität auszuführen, könntest du ${hamburgers.toFixed(1)} Hamburger essen!`;
+        let hamburgers = totalActivityHoursInLife / 0.15; // Ein Hamburger dauert ca. 9 Minuten (0.15 Stunden)
+        comparisonText = `Das entspricht etwa ${hamburgers.toFixed(1)} Hamburgern – mit extra Käse.`;
         break;
       case 6:
-        let islandDays = totalActivityHoursInLife / (24 * 365);
-        comparisonText = `Anstatt deine Aktivität auszuführen, könntest du ${islandDays.toFixed(1)} Jahre auf einer Insel leben!`;
+        let walksAroundEarth = totalActivityHoursInLife / (24 * 365 * 3); // Einmal zu Fuß um die Erde: ca. 3 Jahre
+        comparisonText = `Du könntest die Erde ${walksAroundEarth.toFixed(1)} Mal zu Fuß umrunden. Ohne Blasenpflaster.`;
+        break;
+      case 7:
+        let olympicRuns = totalActivityHoursInLife / 0.00278; // 100m Sprint: ~10 Sekunden = 0.00278 Stunden
+        comparisonText = `Das wären etwa ${olympicRuns.toFixed(1)} olympische 100-Meter-Sprints. Usain wäre stolz.`;
+        break;
+      case 8:
+        let minecraftHardcoreRuns = totalActivityHoursInLife / 50; // Minecraft Hardcore dauert ~50 Stunden
+        comparisonText = `Du könntest Minecraft Hardcore etwa ${minecraftHardcoreRuns.toFixed(1)} Mal durchspielen – inklusive Redstone-Farmen und Netherite-Beacon.`;
         break;
     }
+    
 
     screen.innerHTML = `Überlege dir eine Aktivität! <br> Deine Wahl: ${time} Stunden pro Woche.<br> Öffne deine Kapsel!`;
 
