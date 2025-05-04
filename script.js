@@ -56,7 +56,7 @@ document.getElementById('submit').addEventListener('click', function () {
 
     switch (randomComparison) {
       case 0:
-        let bachelors = totalActivityHoursInLife / (4000 * 52); // Ein Bachelor dauert ca. 4000 Stunden pro Semester
+        let bachelors = totalActivityHoursInLife / (4000 * 6.5); // Ein Bachelor dauert ca. 4000 Stunden pro Semester
         comparisonText = `Damit könntest du etwa ${bachelors.toFixed(1)} Bachelorabschlüsse machen.`;
         break;
       case 1:
@@ -166,7 +166,60 @@ function animateDragon(totalFrames, frameWidth, frameDuration, totalTime) {
 }
 
 document.getElementById('back-button').addEventListener('click', function () {
-  location.reload();
+  const screen = document.querySelector('.screen');
+  const speechBubble = document.getElementById('speech-bubble');
+  const speechText = document.getElementById('speech-text');
+  const capsule = document.getElementById('capsule');
+  const dragon = document.getElementById('dragon');
+  const result = document.getElementById('result');
+  const submitButton = document.getElementById('submit');
+  const plushyTalk = document.getElementById('plushy-talk');
+
+  // Medien stoppen
+  if (plushyTalk) {
+    plushyTalk.pause();
+    plushyTalk.currentTime = 0;
+  }
+
+  // UI zurücksetzen
+  capsule.style.display = 'none';
+  capsule.style.pointerEvents = 'none';
+  dragon.style.display = 'none';
+  speechBubble.style.display = 'none';
+  speechText.textContent = '';
+  result.innerHTML = '';
+
+  // Elemente neu anzeigen
+  document.querySelectorAll('.input-group').forEach(group => group.style.display = 'block');
+  submitButton.style.display = 'inline-block';
+  document.getElementById('capsule-container').style.display = 'none';
+  document.getElementById('dice-container').style.display = 'flex';
+  document.getElementById('teddy-container').style.display = 'block';
+  document.querySelector('.vending-machine').style.display = 'block';
+
+  // Back-Button ausblenden
+  this.style.display = 'none';
+
+  // *** Wiederherstellen des ursprünglichen Bildschirmtexts ***
+  screen.innerHTML = `
+    <div style="text-align: center;">
+      KAPSELAUTOMAT v0.4<br><br>
+      Denk an eine Aktivität!
+    </div>
+  `;
+
+  // Entferne manuelle Styles, damit wieder CSS-Klassen greifen
+  document.querySelector('.screen').removeAttribute('style');
+  document.getElementById('dice-container').removeAttribute('style');
+  document.getElementById('teddy-container').removeAttribute('style');
+  document.getElementById('scale-container').removeAttribute('style');
+
+  document.querySelectorAll('.input-group').forEach(group => {
+    group.removeAttribute('style');
+  });
+
+  // Figur-Position an aktuelle Zeit anpassen
+  updateFigurePosition();
 });
 
 function typeWriterEffect(element, text, speed = 50) {

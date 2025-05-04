@@ -1,7 +1,4 @@
 let dataStream = '';
-let time = 5;
-const maxTime = 50;
-const minTime = 1;
 
 
 function startConnection() {
@@ -126,9 +123,22 @@ function handleTouch13() {
 }
 
 function handleTouch14() {
-}
+        const submitButton = document.getElementById("submit");
+        if (submitButton) {
+            submitButton.click(); // Simuliert echten Button-Klick
+            submitButton.classList.add("active");
+    
+            // Optionaler Feedback-Effekt
+            setTimeout(() => {
+                submitButton.classList.remove("active");
+            }, 200);
+        } else {
+            console.error("Submit-Button nicht gefunden");
+        }
+    }
+    
 
-// Funktion, um Touch-Ereignis für Element 27 zu verarbeiten
+
 
 function handleTouch27() {
 // Wende Styling an und verarbeite das Touch-Ereignis für verschiedene Teile des Quiz
@@ -219,7 +229,7 @@ let config = {
 
 let gui = new dat.gui.GUI();
 
-let guiMain = gui.addFolder("EIA1 Voyager SDK");
+let guiMain = gui.addFolder("ESP-Controller");
 guiMain.open();
 let guiGroupTouch = guiMain.addFolder("Touch Config");
 guiGroupTouch.open();
