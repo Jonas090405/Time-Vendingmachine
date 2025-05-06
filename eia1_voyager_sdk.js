@@ -109,52 +109,81 @@ function handleLoaded() {
 // Funktion, um Touch-Ereignis für Element 12 zu verarbeiten
 
 function handleTouch12() {
-
+    const figureElement = document.getElementById("figure");
+    if (isVisible(figureElement)) {
         console.log("Touch 12 = ← triggered");
         if (time > minTime) {
             time--;
             updateFigurePosition();
         }
+    } else {
+        console.log("Figure-Element nicht sichtbar.");
     }
+}
     
  // Wende Styling an und verarbeite das Touch-Ereignis für verschiedene Teile des Quiz
 
 function handleTouch13() {
 }
 
-function handleTouch14() {
-        const submitButton = document.getElementById("submit");
-        if (submitButton) {
-            submitButton.click(); // Simuliert echten Button-Klick
-            submitButton.classList.add("active");
-    
-            // Optionaler Feedback-Effekt
-            setTimeout(() => {
-                submitButton.classList.remove("active");
-            }, 200);
-        } else {
-            console.error("Submit-Button nicht gefunden");
-        }
-    }
-    
+// Funktion, um zu überprüfen, ob ein Element sichtbar ist
+function isVisible(el) {
+    return el && el.offsetParent !== null;
+}
 
+// Funktion zum Verarbeiten von Touch 14
+function handleTouch14() {
+    const submitButton = document.getElementById("submit");
+    if (isVisible(submitButton)) {
+        submitButton.click(); // Simuliert den Klick auf den Submit-Button
+        submitButton.classList.add("active");
+
+        // Optionaler Feedback-Effekt
+        setTimeout(() => {
+            submitButton.classList.remove("active");
+        }, 200);
+    } else {
+        console.log("Submit-Button ist gerade nicht sichtbar.");
+    }
+
+    const capsule = document.getElementById("capsule");
+    if (isVisible(capsule)) {
+        capsule.click(); // Simuliert den Klick auf die Kapsel
+        console.log("Kapsel geöffnet über Touch");
+    } else {
+        console.log("Kapsel nicht sichtbar.");
+    }
+}
 
 
 function handleTouch27() {
-// Wende Styling an und verarbeite das Touch-Ereignis für verschiedene Teile des Quiz
-}
-
-// Funktion, um Touch-Ereignis für Element 32 zu verarbeiten
-
-function handleTouch32() {
-    console.log("Touch 27 = → triggered");
-    if (time < maxTime) {
-        time++;
-        updateFigurePosition();
+    const backBtn = document.getElementById("back-button");
+    if (isVisible(backBtn)) {
+        backBtn.click(); // Simuliert Klick auf Zurück
+        console.log("Back-Button gedrückt über Touch 27");
+    } else {
+        console.log("Back-Button nicht sichtbar.");
     }
-
-// Wende Styling an und verarbeite das Touch-Ereignis für verschiedene Teile des Quiz
 }
+
+
+    
+
+
+// Funktion zum Verarbeiten von Touch 32
+function handleTouch32() {
+    console.log("Touch 32 = → triggered");
+    const figureElement = document.getElementById("figure");
+    if (isVisible(figureElement)) {
+        if (time < maxTime) {
+            time++;
+            updateFigurePosition();
+        }
+    } else {
+        console.log("Figure-Element nicht sichtbar.");
+    }
+}
+
 
 // Funktion, um das Styling für die Figur auf der Skala zu verarbeiten
 function handleTouchFigure(stylingClass) {

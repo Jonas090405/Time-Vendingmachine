@@ -303,8 +303,8 @@ function createStars(button) {
   const buttonRect = button.getBoundingClientRect();
 
   const corners = [
-    { x: buttonRect.left, y: buttonRect.top },                    // oben links
-    { x: buttonRect.right - 10, y: buttonRect.top }              // oben rechts
+    { x: buttonRect.left, y: buttonRect.top }, // oben links
+    { x: buttonRect.right - 10, y: buttonRect.top } // oben rechts
   ];
 
   corners.forEach(corner => {
@@ -368,3 +368,6 @@ document.getElementById("submit").addEventListener("click", function (e) {
 
   }, 600); // leichte Verzögerung für Animation
 });
+
+
+
