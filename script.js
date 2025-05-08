@@ -2,9 +2,25 @@ let comparisonText = '';
 let time = 5;
 let minTime = 1;
 let maxTime = 40;
-
 let figure = document.getElementById('figure');
 let timeValue = document.getElementById('time-value');
+let isTyping = false;
+
+// Lautstärke aller Sounds reduzieren
+window.addEventListener('DOMContentLoaded', () => {
+  const sounds = [
+    document.getElementById('capsule-appear'),
+    document.getElementById('capsule-open'),
+    document.getElementById('plushy-talk'),
+    document.getElementById('click-sound'),
+    document.getElementById('plush-appear'), 
+  ];
+
+  sounds.forEach(sound => {
+    if (sound) sound.volume = 0.1; // 20% Lautstärke
+  });
+});
+
 
 const capsuleSprites = [
   { src: "capsulesprite.jpg", frameWidth: 320, totalFrames: 3 },
@@ -43,6 +59,12 @@ updateFigurePosition();
 const submitButton = document.getElementById("submit");
 
 submitButton.addEventListener("click", function () {
+  // Deaktiviert den Submit-Button, um mehrfaches Klicken zu verhindern
+  const clickSound = document.getElementById('click-sound');
+if (clickSound) clickSound.play();
+
+  submitButton.disabled = true;
+  
   const button = this;
   const rect = button.getBoundingClientRect();
   const centerX = rect.left + rect.width / 2;
@@ -135,6 +157,20 @@ document.getElementById('capsule').addEventListener('click', function () {
 
   capsule.style.pointerEvents = 'none';
 
+  setTimeout(() => {
+    capsule.style.display = 'none';
+  
+    dragon.src = selectedDragon.src;
+    dragon.style.objectPosition = '0 0';
+    dragon.style.display = 'block';
+  
+    // Sound beim Erscheinen des Tiers abspielen
+    const plushAppearSound = document.getElementById('plush-appear');
+    if (plushAppearSound) plushAppearSound.play();
+    }, 1200);
+  
+  
+
   let frame = 0;
   let capsuleAnim = setInterval(() => {
     let offsetX = -frame * selectedCapsule.frameWidth;
@@ -176,7 +212,14 @@ function animateDragon(totalFrames, frameWidth, frameDuration, totalTime) {
     dragon.style.objectPosition = '0 0';
   }, totalTime);
 }
+
 document.getElementById('back-button').addEventListener('click', function () {
+  const clickSound = document.getElementById('click-sound');
+if (clickSound) clickSound.play();
+
+  // Deaktiviert den Back-Button, um mehrfaches Klicken zu verhindern
+  this.disabled = true;
+
   const speechBubble = document.getElementById('speech-bubble');
   const speechText = document.getElementById('speech-text');
   const capsule = document.getElementById('capsule');
@@ -194,6 +237,7 @@ document.getElementById('back-button').addEventListener('click', function () {
   capsule.style.pointerEvents = 'none';
   dragon.style.display = 'none';
   speechBubble.style.display = 'none';
+  isTyping = false;
   speechText.textContent = '';
   result.innerHTML = '';
   submitButton.classList.remove('clicked');
@@ -219,21 +263,37 @@ document.getElementById('back-button').addEventListener('click', function () {
   document.querySelectorAll('.star').forEach(star => star.remove());
 
   updateFigurePosition();
-});
 
+  // Nach der Verzögerung den Back-Button und den Submit-Button wieder aktivieren
+  setTimeout(() => {
+    this.disabled = false;
+    submitButton.disabled = false; // Hier den Submit-Button wieder aktivieren
+  }, 600); // Verzögerung von 600 ms
+});
 
 // ------------ Sterneffekte + Typewriter -----------------
 function typeWriterEffect(element, text, speed = 50) {
   let i = 0;
   element.textContent = '';
   let typingSound = document.getElementById('plushy-talk');
+  isTyping = true;
+
   function loopSound() {
     if (typingSound) {
       typingSound.currentTime = 0;
       typingSound.play();
     }
   }
+
   function type() {
+    if (!isTyping) {
+      if (typingSound) {
+        typingSound.pause();
+        typingSound.currentTime = 0;
+      }
+      return;
+    }
+
     if (i < text.length) {
       element.textContent += text.charAt(i);
       loopSound();
@@ -244,10 +304,13 @@ function typeWriterEffect(element, text, speed = 50) {
         typingSound.pause();
         typingSound.currentTime = 0;
       }
+      isTyping = false;
     }
   }
+
   type();
 }
+
 
 function showStars(x, y) {
   for (let i = 0; i < 0; i++) {

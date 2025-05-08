@@ -291,3 +291,5 @@ connectBtn.domElement.previousSibling.style.backgroundColor = "#842047";
 
 
 console.log("Trying to open serial port:", port);
+
+

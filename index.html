@@ -13,35 +13,41 @@
   <link href="https://fonts.googleapis.com/css2?family=Jersey+10&display=swap" rel="stylesheet" />
 </head>
 <body>
-  <div id="interface-wrapper">
-    <div class="vending-machine">
-      <div class="input-group">
-        <label for="time">Verbrachte Zeit pro Woche:</label>
-        <div id="scale-container">
-          <div id="scale"></div>
-          <div id="figure">🚶‍♂️</div>
-        </div>
-        <div id="time-display"><span id="time-value">5</span> Stunden</div>
-      </div>
-      <button id="submit">Bestätigen</button>
-      <div id="dice-container" style="display: none;">
-        <div id="result" style="margin-top: 16px; font-size: 10px;"></div>
-      </div>
-    </div>
-
-    <div id="capsule-container">
-      <img id="capsule" src="capsulesprite.jpg" alt="Kapsel" />
-      <div id="teddy-container"></div>
-      <div id="result"></div>
+  <div class="scale-wrapper">
+    <div id="interface-wrapper">
+      
+      <!-- Back Button korrekt positioniert -->
       <button id="back-button" style="display: none;">Zurück</button>
-    </div>
 
-    <div id="dragon-container">
-      <img id="dragon" src="Dragonsprite.png" alt="Drachenplüschtier" />
-    </div>
+      <div class="vending-machine">
+        <div class="input-group">
+          <!-- Der Text wurde hier in ein div statt einem label gesetzt -->
+          <div class="time-label">Verbrachte Zeit pro Woche:</div>
+          <div id="scale-container">
+            <div id="scale"></div>
+            <div id="figure">🚶‍♂️</div>
+          </div>
+          <div id="time-display"><span id="time-value">5</span> Stunden</div>
+        </div>
+        <button id="submit">Bestätigen</button>
+        <div id="dice-container" style="display: none;">
+          <div id="result" style="margin-top: 16px; font-size: 10px;"></div>
+        </div>
+      </div>
 
-    <div id="speech-bubble" style="display: none;">
-      <span id="speech-text"></span>
+      <div id="capsule-container">
+        <img id="capsule" src="capsulesprite.jpg" alt="Kapsel" />
+        <div id="teddy-container"></div>
+        <div id="result"></div>
+      </div>
+
+      <div id="dragon-container">
+        <img id="dragon" src="Dragonsprite.png" alt="Drachenplüschtier" />
+      </div>
+
+      <div id="speech-bubble" style="display: none;">
+        <span id="speech-text"></span>
+      </div>
     </div>
   </div>
 
@@ -60,5 +66,16 @@
     <source src="plushy-talk.wav" type="audio/wav" />
     Dein Browser unterstützt das Audio-Element nicht.
   </audio>
+
+  <audio id="click-sound">
+    <source src="button-press.wav" type="audio/wav" />
+    Dein Browser unterstützt das Audio-Element nicht.
+  </audio>
+  
+  <audio id="plush-appear">
+    <source src="plushy-appear.wav" type="audio/wav" />
+    Dein Browser unterstützt das Audio-Element nicht.
+  </audio>
+  
 </body>
 </html>
