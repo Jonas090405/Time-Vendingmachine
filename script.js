@@ -39,94 +39,93 @@ document.addEventListener('keydown', (event) => {
 
 updateFigurePosition();
 
-document.getElementById("submit").addEventListener("click", function (e) {
+// -------- Submit Event mit Sternen + Logik ------------
+const submitButton = document.getElementById("submit");
+
+submitButton.addEventListener("click", function () {
   const button = this;
   const rect = button.getBoundingClientRect();
   const centerX = rect.left + rect.width / 2;
   const centerY = rect.top + rect.height / 2;
 
-  button.classList.add("clicked");
+  button.classList.add('clicked');
   showStars(centerX, centerY);
+  createStars(button);
 
   setTimeout(() => {
-    button.classList.remove("clicked");
-
-    selectedCapsule = capsuleSprites[Math.floor(Math.random() * capsuleSprites.length)];
-    selectedDragon = dragonSprites[Math.floor(Math.random() * dragonSprites.length)];
-
-    let diceContainer = document.getElementById('dice-container');
-    let result = document.getElementById('result');
-    let capsuleContainer = document.getElementById('capsule-container');
-    let inputGroup = document.querySelectorAll('.input-group');
-    let capsule = document.getElementById('capsule');
-
-    if (time) {
-      let hoursPerWeek = parseInt(time);
-      let lifeExpectancy = 81;
-      let totalActivityHoursInLife = hoursPerWeek * 52 * lifeExpectancy;
-      let randomComparison = Math.floor(Math.random() * 9);
-
-      switch (randomComparison) {
-        case 0:
-          let bachelors = totalActivityHoursInLife / (4000 * 6.5);
-          comparisonText = `Damit könntest du etwa ${bachelors.toFixed(1)} Bachelorabschlüsse machen.`;
-          break;
-        case 1:
-          let monthsWatchingCats = totalActivityHoursInLife / (24 * 30);
-          comparisonText = `Das reicht für ${monthsWatchingCats.toFixed(1)} Monate nonstop Katzenvideos.`;
-          break;
-        case 2:
-          let tinderDates = totalActivityHoursInLife / 2;
-          comparisonText = `Genug Zeit für etwa ${tinderDates.toFixed(1)} Tinder-Dates – und trotzdem 0 Matches.`;
-          break;
-        case 3:
-          let netflixMovies = totalActivityHoursInLife / 2;
-          comparisonText = `Reicht für etwa ${netflixMovies.toFixed(1)} Netflix-Filme (falls du dich irgendwann entscheiden kannst).`;
-          break;
-        case 4:
-          let worldTrips = totalActivityHoursInLife / (24 * 400);
-          comparisonText = `Damit könntest du ${worldTrips.toFixed(1)} Mal um die Welt reisen.`;
-          break;
-        case 5:
-          let hamburgers = totalActivityHoursInLife / 0.15;
-          comparisonText = `Das entspricht etwa ${hamburgers.toFixed(1)} Hamburgern – mit extra Käse.`;
-          break;
-        case 6:
-          let walksAroundEarth = totalActivityHoursInLife / (24 * 365 * 3);
-          comparisonText = `Du könntest die Erde ${walksAroundEarth.toFixed(1)} Mal zu Fuß umrunden. Ohne Blasenpflaster.`;
-          break;
-        case 7:
-          let olympicRuns = totalActivityHoursInLife / 0.00278;
-          comparisonText = `Das wären etwa ${olympicRuns.toFixed(1)} olympische 100-Meter-Sprints. Usain wäre stolz.`;
-          break;
-        case 8:
-          let minecraftHardcoreRuns = totalActivityHoursInLife / 50;
-          comparisonText = `Du könntest Minecraft Hardcore etwa ${minecraftHardcoreRuns.toFixed(1)} Mal durchspielen – inklusive Redstone-Farmen und Netherite-Beacon.`;
-          break;
-      }
-
-      capsule.src = selectedCapsule.src;
-      capsule.style.display = 'block';
-      capsule.style.objectPosition = '0 0';
-      capsule.style.pointerEvents = 'auto';
-
-      screen.innerHTML = `Zeitangabe: ${time} Stunden pro Woche.<br><br> Öffne deine Kapsel!`;
-
-      button.style.display = 'none';
-      inputGroup.forEach(group => group.style.display = 'none');
-      capsuleContainer.style.display = 'block';
-      diceContainer.style.display = 'none';
-      document.getElementById('teddy-container').style.display = 'none';
-      result.innerHTML = '';
-      document.getElementById('back-button').style.display = 'none';
-      document.querySelector('.vending-machine').style.display = 'none';
-
-      document.getElementById('capsule-appear')?.play();
-    }
-
+    button.classList.remove('clicked');
+    handleSubmit();
   }, 600);
 });
 
+// ----------- Handle Submit Hauptfunktion ------------
+function handleSubmit() {
+  selectedCapsule = capsuleSprites[Math.floor(Math.random() * capsuleSprites.length)];
+  selectedDragon = dragonSprites[Math.floor(Math.random() * dragonSprites.length)];
+
+  let diceContainer = document.getElementById('dice-container');
+  let result = document.getElementById('result');
+  let capsuleContainer = document.getElementById('capsule-container');
+  let inputGroup = document.querySelectorAll('.input-group');
+  let capsule = document.getElementById('capsule');
+
+  if (time) {
+    let hoursPerWeek = parseInt(time);
+    let lifeExpectancy = 81;
+    let totalActivityHoursInLife = hoursPerWeek * 52 * lifeExpectancy;
+    let randomComparison = Math.floor(Math.random() * 9);
+
+    switch (randomComparison) {
+      case 0:
+        comparisonText = `Damit könntest du etwa ${(totalActivityHoursInLife / (4000 * 6.5)).toFixed(1)} Bachelorabschlüsse machen.`;
+        break;
+      case 1:
+        comparisonText = `Das reicht für ${(totalActivityHoursInLife / (24 * 30)).toFixed(1)} Monate nonstop Katzenvideos.`;
+        break;
+      case 2:
+        comparisonText = `Genug Zeit für etwa ${(totalActivityHoursInLife / 2).toFixed(1)} Tinder-Dates – und trotzdem 0 Matches.`;
+        break;
+      case 3:
+        comparisonText = `Reicht für etwa ${(totalActivityHoursInLife / 2).toFixed(1)} Netflix-Filme (falls du dich irgendwann entscheiden kannst).`;
+        break;
+      case 4:
+        comparisonText = `Damit könntest du ${(totalActivityHoursInLife / (24 * 400)).toFixed(1)} Mal um die Welt reisen.`;
+        break;
+      case 5:
+        comparisonText = `Das entspricht etwa ${(totalActivityHoursInLife / 0.15).toFixed(1)} Hamburgern – mit extra Käse.`;
+        break;
+      case 6:
+        comparisonText = `Du könntest die Erde ${(totalActivityHoursInLife / (24 * 365 * 3)).toFixed(1)} Mal zu Fuß umrunden. Ohne Blasenpflaster.`;
+        break;
+      case 7:
+        comparisonText = `Das wären etwa ${(totalActivityHoursInLife / 0.00278).toFixed(1)} olympische 100-Meter-Sprints. Usain wäre stolz.`;
+        break;
+      case 8:
+        comparisonText = `Du könntest Minecraft Hardcore etwa ${(totalActivityHoursInLife / 50).toFixed(1)} Mal durchspielen – inklusive Redstone-Farmen und Netherite-Beacon.`;
+        break;
+    }
+
+    capsule.src = selectedCapsule.src;
+    capsule.style.display = 'block';
+    capsule.style.objectPosition = '0 0';
+    capsule.style.pointerEvents = 'auto';
+
+    screen.innerHTML = `Zeitangabe: ${time} Stunden pro Woche.<br><br> Öffne deine Kapsel!`;
+
+    submitButton.style.display = 'none';
+    inputGroup.forEach(group => group.style.display = 'none');
+    capsuleContainer.style.display = 'block';
+    diceContainer.style.display = 'none';
+    document.getElementById('teddy-container').style.display = 'none';
+    result.innerHTML = '';
+    document.getElementById('back-button').style.display = 'none';
+    document.querySelector('.vending-machine').style.display = 'none';
+
+    document.getElementById('capsule-appear')?.play();
+  }
+}
+
+// ----------- Kapsel öffnen und Drache animieren ----------
 document.getElementById('capsule').addEventListener('click', function () {
   let capsule = document.getElementById('capsule');
   let dragon = document.getElementById('dragon');
@@ -177,14 +176,12 @@ function animateDragon(totalFrames, frameWidth, frameDuration, totalTime) {
     dragon.style.objectPosition = '0 0';
   }, totalTime);
 }
-
 document.getElementById('back-button').addEventListener('click', function () {
   const speechBubble = document.getElementById('speech-bubble');
   const speechText = document.getElementById('speech-text');
   const capsule = document.getElementById('capsule');
   const dragon = document.getElementById('dragon');
   const result = document.getElementById('result');
-  const submitButton = document.getElementById('submit');
   const plushyTalk = document.getElementById('plushy-talk');
 
   if (plushyTalk) {
@@ -192,40 +189,40 @@ document.getElementById('back-button').addEventListener('click', function () {
     plushyTalk.currentTime = 0;
   }
 
+  // Kapsel & Co. ausblenden
   capsule.style.display = 'none';
   capsule.style.pointerEvents = 'none';
   dragon.style.display = 'none';
   speechBubble.style.display = 'none';
   speechText.textContent = '';
   result.innerHTML = '';
+  submitButton.classList.remove('clicked');
 
-  document.querySelectorAll('.input-group').forEach(group => group.style.display = 'block');
-  submitButton.style.display = 'inline-block';
+  // Interface-Elemente zurücksetzen
+  document.querySelectorAll('.input-group').forEach(group => {
+    group.style.display = '';
+  });
+
+  submitButton.style.display = '';
   document.getElementById('capsule-container').style.display = 'none';
-  document.getElementById('dice-container').style.display = 'flex';
-  document.getElementById('teddy-container').style.display = 'block';
-  document.querySelector('.vending-machine').style.display = 'block';
+  document.getElementById('dice-container').style.display = '';
+  document.getElementById('teddy-container').style.display = '';
+  document.querySelector('.vending-machine').style.display = '';
 
   this.style.display = 'none';
 
-  screen.innerHTML = `
-    <div style="text-align: center;">
-      KAPSELAUTOMAT v0.4<br><br>
-      Denk an eine Aktivität!
-    </div>
-  `;
+  // Position & Layout durch CSS regeln lassen
+  document.getElementById('scale-container').style.display = '';
+  document.getElementById('time-display').style.display = '';
 
-  document.getElementById('dice-container').removeAttribute('style');
-  document.getElementById('teddy-container').removeAttribute('style');
-  document.getElementById('scale-container').removeAttribute('style');
-
-  document.querySelectorAll('.input-group').forEach(group => {
-    group.removeAttribute('style');
-  });
+  // Aufräumen
+  document.querySelectorAll('.star').forEach(star => star.remove());
 
   updateFigurePosition();
 });
 
+
+// ------------ Sterneffekte + Typewriter -----------------
 function typeWriterEffect(element, text, speed = 50) {
   let i = 0;
   element.textContent = '';
@@ -251,106 +248,52 @@ function typeWriterEffect(element, text, speed = 50) {
   }
   type();
 }
+
 function showStars(x, y) {
   for (let i = 0; i < 0; i++) {
     const star = document.createElement("div");
     star.classList.add("star");
-
     const sideOffset = Math.random() < 0.5 ? -40 : 40;
     const verticalJitter = (Math.random() - 0.5) * 20;
-
     star.style.left = `${x + sideOffset}px`;
     star.style.top = `${y + verticalJitter}px`;
-
     const angle = Math.random() * 60 - 30;
     const distance = 60 + Math.random() * 40;
     const dx = Math.cos(angle * (Math.PI / 180)) * distance;
     const dy = Math.sin(angle * (Math.PI / 180)) * distance;
-
     star.style.setProperty('--x', `${dx}px`);
     star.style.setProperty('--y', `${dy}px`);
-
     document.body.appendChild(star);
-
     setTimeout(() => {
       star.remove();
     }, 800);
   }
 }
 
-
-document.getElementById("submit").addEventListener("click", function () {
-  this.classList.add("clicked");
-  createStars(this);
-  setTimeout(() => this.classList.remove("clicked"), 300);
-});
-
 function createStars(button) {
   const buttonRect = button.getBoundingClientRect();
-
   const corners = [
-    { x: buttonRect.left, y: buttonRect.top }, // oben links
-    { x: buttonRect.right - 10, y: buttonRect.top } // oben rechts
+    { x: buttonRect.left, y: buttonRect.top },
+    { x: buttonRect.right - 10, y: buttonRect.top }
   ];
-
   corners.forEach(corner => {
     for (let i = 0; i < 4; i++) {
       const star = document.createElement("div");
       star.classList.add("star");
-
-      // Star relativ zur Seite platzieren
-      star.style.position = "fixed"; // <-- wichtig: immer relativ zum Viewport!
+      star.style.position = "fixed";
       star.style.left = `${corner.x}px`;
       star.style.top = `${corner.y}px`;
       star.style.transform = "translate(-50%, -50%)";
-
-      // Zufällige Richtung
       const angle = (Math.random() * Math.PI) - Math.PI / 2;
       const distance = 60 + Math.random() * 50;
       const dx = Math.cos(angle) * distance;
       const dy = Math.sin(angle) * distance;
-
       star.style.setProperty("--x", `${dx}px`);
       star.style.setProperty("--y", `${dy}px`);
-
       document.body.appendChild(star);
-
       setTimeout(() => {
         star.remove();
       }, 800);
     }
   });
 }
-
-
-// Eventlistener für den Button
-const submitButton = document.getElementById("submit");
-submitButton.addEventListener("click", () => {
-  submitButton.classList.add("clicked");
-  createStars(submitButton);
-
-  setTimeout(() => {
-    submitButton.classList.remove("clicked");
-  }, 200);
-});
-
-
-
-document.getElementById("submit").addEventListener("click", function (e) {
-  const button = this;
-  const rect = button.getBoundingClientRect();
-  const centerX = rect.left + rect.width / 2;
-  const centerY = rect.top + rect.height / 2;
-
-  button.classList.add("clicked");
-  showStars(centerX, centerY);
-
-  // Warten bevor Aktion ausgeführt wird (für ESP-Effekt)
-  setTimeout(() => {
-    button.classList.remove("clicked");
-
-    // Deine eigentliche Logik hier ausführen
-    handleSubmit(); // <- diese Funktion musst du ggf. anpassen
-
-  }, 600); // leichte Verzögerung für Animation
-});

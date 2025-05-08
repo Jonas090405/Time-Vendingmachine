@@ -105,19 +105,27 @@ body {
   width: 320px;
   height: 320px;
   overflow: hidden;
-  margin-top: 20px;
   flex-direction: column;
   align-items: center;
   display: none;
+  position: absolute;
+  left: 50%;                      /* Horizontaler Ausgangspunkt */
+  transform: translateX(-50%);    /* Exakte horizontale Zentrierung */
+  bottom: 36vh                 /* Abstand vom unteren Rand */
 }
 
 #capsule {
   cursor: pointer;
   width: 960px;
   height: 320px;
+  filter: drop-shadow(0 -5px 10px #ff00e0);
+  justify-content: center; /* Horizontal zentrieren */
+  align-items: center;     /* Vertikal zentrieren */
+  flex-direction: column;
+  margin-top: 20px;
   object-fit: none;
   object-position: 0 0;
-  filter: drop-shadow(0 0 10px #ff00e0);
+
 }
 
 #dragon-container {
