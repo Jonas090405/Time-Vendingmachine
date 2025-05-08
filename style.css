@@ -15,33 +15,29 @@ body {
 /* ------------------- Automaten-Stil ------------------- */
 .vending-machine {
   font-family: "Jersey 10", sans-serif;
-  width: 600px;
+  width: calc(100vw - 8px); /* Volle Breite minus Border */
+  height: calc(100vh - 8px); /* Volle Höhe minus Border */
   background: linear-gradient(to bottom, #2a004f, #3d0a73);
-  border: 4px solid #ff00e0;
-  border-radius: 20px;
+  border: 4px solid #ff00e0; /* Border bleibt sichtbar */
+  border-radius: 20px; /* Optional: Behalte die abgerundeten Ecken */
   padding: 24px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center; /* Zentriert den Inhalt */
   box-shadow: 0 0 20px #ff00e0;
   position: relative;
+  transform: scale(0.98); /* Skaliert leicht, um Platz für den Border zu schaffen */
+  box-sizing: border-box; /* Border wird in die Größe einbezogen */
 }
 
-/* ------------------- Bildschirm oben ------------------- */
-.screen {
-  font-family: "Jersey 10", sans-serif;
-  background-color: #110022;
-  color: #00ffe7;
-  font-size: 20px;
-  width: 100%;
-  padding: 16px;
-  box-sizing: border-box;
-  margin-bottom: 32px;
-  text-align: center;
-  text-shadow: 0 0 8px #00ffe7;
-  border: 2px solid #00ffe7;
-  border-radius: 8px;
+/* Skaliere enthaltene Elemente proportional */
+.vending-machine * {
+  transform: scale(0.98); /* Skaliert alle Kinder-Elemente */
+  transform-origin: center; /* Skalierung erfolgt von der Mitte */
 }
+
+
 
 /* ------------------- Eingabegruppen ------------------- */
 .input-group {
@@ -91,7 +87,6 @@ body {
   color: #fff;
   border-radius: 15px;
   cursor: pointer;
-  width: 100%;
   box-shadow: 0 0 15px #ff00e0;
   text-transform: uppercase;
   text-shadow: 0 0 5px #ffb3ff;

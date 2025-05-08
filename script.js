@@ -18,8 +18,8 @@ const dragonSprites = [
   { src: "dragon3.png", frameWidth: 500, totalFrames: 5 }
 ];
 
-let selectedCapsule = capsuleSprites[Math.floor(Math.random() * capsuleSprites.length)];
-let selectedDragon = dragonSprites[Math.floor(Math.random() * dragonSprites.length)];
+let selectedCapsule;
+let selectedDragon;
 
 function updateFigurePosition() {
   let percentage = (time - minTime) / (maxTime - minTime) * 100;
@@ -48,12 +48,12 @@ document.getElementById("submit").addEventListener("click", function (e) {
   button.classList.add("clicked");
   showStars(centerX, centerY);
 
-  // Verzögert ausführen – hier kommt ALLES was vorher im "handleSubmit" war
   setTimeout(() => {
     button.classList.remove("clicked");
 
-    // Hier beginnt deine Original-Submit-Logik
-    let screen = document.querySelector('.screen');
+    selectedCapsule = capsuleSprites[Math.floor(Math.random() * capsuleSprites.length)];
+    selectedDragon = dragonSprites[Math.floor(Math.random() * dragonSprites.length)];
+
     let diceContainer = document.getElementById('dice-container');
     let result = document.getElementById('result');
     let capsuleContainer = document.getElementById('capsule-container');
@@ -119,17 +119,16 @@ document.getElementById("submit").addEventListener("click", function (e) {
       document.getElementById('teddy-container').style.display = 'none';
       result.innerHTML = '';
       document.getElementById('back-button').style.display = 'none';
+      document.querySelector('.vending-machine').style.display = 'none';
 
       document.getElementById('capsule-appear')?.play();
     }
 
-  }, 600); // kleine Pause für Animation
+  }, 600);
 });
-
 
 document.getElementById('capsule').addEventListener('click', function () {
   let capsule = document.getElementById('capsule');
-  let screen = document.querySelector('.screen');
   let dragon = document.getElementById('dragon');
   let speechBubble = document.getElementById('speech-bubble');
   let speechTextElement = document.getElementById('speech-text');
@@ -147,7 +146,6 @@ document.getElementById('capsule').addEventListener('click', function () {
       setTimeout(() => {
         capsule.style.display = 'none';
 
-        // Nur der zufällige animierte Drache wird angezeigt
         dragon.src = selectedDragon.src;
         dragon.style.objectPosition = '0 0';
         dragon.style.display = 'block';
@@ -156,11 +154,9 @@ document.getElementById('capsule').addEventListener('click', function () {
 
         speechBubble.style.display = 'block';
         typeWriterEffect(speechTextElement, comparisonText, 50);
-        
 
         screen.innerHTML = `Berechnung abgeschlossen!`;
         backButton.style.display = 'block';
-        document.querySelector('.vending-machine').style.display = 'none';
       }, 700);
     }
   }, 300);
@@ -183,7 +179,6 @@ function animateDragon(totalFrames, frameWidth, frameDuration, totalTime) {
 }
 
 document.getElementById('back-button').addEventListener('click', function () {
-  const screen = document.querySelector('.screen');
   const speechBubble = document.getElementById('speech-bubble');
   const speechText = document.getElementById('speech-text');
   const capsule = document.getElementById('capsule');
@@ -192,13 +187,11 @@ document.getElementById('back-button').addEventListener('click', function () {
   const submitButton = document.getElementById('submit');
   const plushyTalk = document.getElementById('plushy-talk');
 
-  // Medien stoppen
   if (plushyTalk) {
     plushyTalk.pause();
     plushyTalk.currentTime = 0;
   }
 
-  // UI zurücksetzen
   capsule.style.display = 'none';
   capsule.style.pointerEvents = 'none';
   dragon.style.display = 'none';
@@ -206,7 +199,6 @@ document.getElementById('back-button').addEventListener('click', function () {
   speechText.textContent = '';
   result.innerHTML = '';
 
-  // Elemente neu anzeigen
   document.querySelectorAll('.input-group').forEach(group => group.style.display = 'block');
   submitButton.style.display = 'inline-block';
   document.getElementById('capsule-container').style.display = 'none';
@@ -214,10 +206,8 @@ document.getElementById('back-button').addEventListener('click', function () {
   document.getElementById('teddy-container').style.display = 'block';
   document.querySelector('.vending-machine').style.display = 'block';
 
-  // Back-Button ausblenden
   this.style.display = 'none';
 
-  // *** Wiederherstellen des ursprünglichen Bildschirmtexts ***
   screen.innerHTML = `
     <div style="text-align: center;">
       KAPSELAUTOMAT v0.4<br><br>
@@ -225,8 +215,6 @@ document.getElementById('back-button').addEventListener('click', function () {
     </div>
   `;
 
-  // Entferne manuelle Styles, damit wieder CSS-Klassen greifen
-  document.querySelector('.screen').removeAttribute('style');
   document.getElementById('dice-container').removeAttribute('style');
   document.getElementById('teddy-container').removeAttribute('style');
   document.getElementById('scale-container').removeAttribute('style');
@@ -235,7 +223,6 @@ document.getElementById('back-button').addEventListener('click', function () {
     group.removeAttribute('style');
   });
 
-  // Figur-Position an aktuelle Zeit anpassen
   updateFigurePosition();
 });
 
@@ -264,7 +251,6 @@ function typeWriterEffect(element, text, speed = 50) {
   }
   type();
 }
-
 function showStars(x, y) {
   for (let i = 0; i < 0; i++) {
     const star = document.createElement("div");
@@ -368,6 +354,3 @@ document.getElementById("submit").addEventListener("click", function (e) {
 
   }, 600); // leichte Verzögerung für Animation
 });
-
-
-
