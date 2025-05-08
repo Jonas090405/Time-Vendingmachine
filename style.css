@@ -232,3 +232,62 @@ body {
     opacity: 0;
   }
 }
+
+/* ------------------- Flacker-Animation für den Body ------------------- */
+@keyframes screen-flicker {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.84; }
+}
+
+body.screen-flicker {
+  animation: screen-flicker 4s infinite;
+}
+
+/* ------------------- Retro TV-Scanlines ------------------- */
+@keyframes scanline-flicker {
+  0% { opacity: 0.8; transform: translateY(0); }
+  50% { opacity: 1; transform: translateY(-4px); }
+  100% { opacity: 0.8; transform: translateY(0); }
+}
+
+
+#scanlines-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 9999;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.2) 0px,
+    rgba(0, 0, 0, 0.2) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  mix-blend-mode: overlay;
+  opacity: 1;
+  animation: scanline-flicker 4s infinite;
+}
+
+/* ------------------- Retro Noise Overlay ------------------- */
+@keyframes scanline-flicker {
+  0% { opacity: 0.3; transform: translateY(0); }
+  50% { opacity: 1; transform: translateY(-2px); }
+  100% { opacity: 0.3; transform: translateY(0); }
+}
+
+#noise-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-image: url('data:image/svg+xml;utf8,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="4" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noiseFilter)" opacity="0.05"/></svg>');
+  opacity: 0.8;
+  pointer-events: none;
+  z-index: 9998;
+  mix-blend-mode: screen;
+  animation: noise-flicker 1s infinite;
+}

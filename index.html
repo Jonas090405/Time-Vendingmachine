@@ -12,16 +12,14 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Jersey+10&display=swap" rel="stylesheet" />
 </head>
-<body>
+<body class="screen-flicker">
   <div class="scale-wrapper">
     <div id="interface-wrapper">
       
-      <!-- Back Button korrekt positioniert -->
       <button id="back-button" style="display: none;">Zurück</button>
 
       <div class="vending-machine">
         <div class="input-group">
-          <!-- Der Text wurde hier in ein div statt einem label gesetzt -->
           <div class="time-label">Verbrachte Zeit pro Woche:</div>
           <div id="scale-container">
             <div id="scale"></div>
@@ -51,6 +49,10 @@
     </div>
   </div>
 
+  <!-- Retro-Effekte -->
+  <div id="scanlines-overlay"></div>
+  <div id="noise-overlay"></div>
+
   <!-- Sounds -->
   <audio id="capsule-appear">
     <source src="capsule-appear.wav" type="audio/wav" />
@@ -76,6 +78,5 @@
     <source src="plushy-appear.wav" type="audio/wav" />
     Dein Browser unterstützt das Audio-Element nicht.
   </audio>
-  
 </body>
 </html>
