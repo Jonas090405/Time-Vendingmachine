@@ -39,7 +39,7 @@ let selectedDragon;
 
 function updateFigurePosition() {
   let percentage = (time - minTime) / (maxTime - minTime) * 100;
-  figure.style.left = `calc(${percentage}% - 15px)`;
+  figure.style.left = `calc(${percentage}% - 15px)`;  // Bewegt das Element basierend auf der Zeit (Slider)
   timeValue.textContent = time;
 }
 
@@ -47,11 +47,16 @@ document.addEventListener('keydown', (event) => {
   if (event.key === 'ArrowLeft' && time > minTime) {
     time--;
     updateFigurePosition();
+    startSpriteAnimation('left');
   } else if (event.key === 'ArrowRight' && time < maxTime) {
     time++;
     updateFigurePosition();
+    startSpriteAnimation('right');
   }
+  clearTimeout(idleTimer);
+  idleTimer = setTimeout(stopSpriteAnimation, 300);
 });
+
 
 updateFigurePosition();
 
@@ -360,3 +365,66 @@ function createStars(button) {
     }
   });
 }
+
+
+// Startet Audio beim ersten Klick
+window.addEventListener('click', function () {
+  const audio = document.getElementById('bg-audio');
+  if (audio.paused) {
+    audio.volume = 0.035; // Leiser machen (0.0 bis 1.0)
+    audio.play();
+  }
+}, { once: true });
+
+
+let frameIndex = 0;
+let totalFrames = 2;
+let frameWidth = 55;
+let animationInterval;
+let moveDirection = null;
+let idleTimer;
+
+function startSpriteAnimation(direction) {
+  if (moveDirection === direction) return;
+
+  moveDirection = direction;
+
+  
+
+  // Bild wechseln je nach Richtung
+  figure.style.backgroundImage = `url('Panda${direction}.png')`;
+
+  // Animation starten
+  clearInterval(animationInterval);
+  animationInterval = setInterval(() => {
+    frameIndex = (frameIndex + 1) % totalFrames;
+    const offsetX = -frameIndex * frameWidth;
+    figure.style.backgroundPosition = `${offsetX}px 0px`;
+  }, 150);
+}
+
+function stopSpriteAnimation() {
+  moveDirection = null;
+  clearInterval(animationInterval);
+  frameIndex = 0;
+  figure.style.backgroundPosition = `0px 0px`;
+}
+
+document.getElementById('slider').addEventListener('input', function () {
+  const value = parseInt(this.value); // Wert des Sliders
+
+  // Wenn der Slider nach rechts geht
+  if (value > 0) {
+    startSpriteAnimation('right');
+  }
+  // Wenn der Slider nach links geht
+  else if (value < 0) {
+    startSpriteAnimation('left');
+  }
+  // Wenn der Slider in der Neutralposition ist
+  else {
+    stopSpriteAnimation();
+  }
+  clearTimeout(idleTimer);
+  idleTimer = setTimeout(stopSpriteAnimation, 300);
+});

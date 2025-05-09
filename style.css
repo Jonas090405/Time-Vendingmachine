@@ -82,11 +82,14 @@ html, body {
 
 #figure {
   position: absolute;
-  top: -30px;
-  left: 5%;
-  font-size: 28px;
-  transition: left 0.05s ease-in-out;
+  top: -20px;
+  width: 64px; /* abhängig von Sprite-Größe */
+  height: 64px;
+  background-image: url('Pandaright.png'); /* Sprite-Bild am Start */
+  background-size: cover;
+  image-rendering: pixelated;
 }
+
 
 /* ------------------- Zeit-Anzeige ------------------- */
 #time-display {
