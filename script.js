@@ -273,7 +273,7 @@ if (clickSound) clickSound.play();
 
 // ------------ Sterneffekte + Typewriter -----------------
 function typeWriterEffect(element, text, speed = 50) {
-  let i = 0;x
+  let i = 0;
   element.textContent = '';
   let typingSound = document.getElementById('plushy-talk');
   isTyping = true;
