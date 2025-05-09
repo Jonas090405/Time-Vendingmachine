@@ -227,7 +227,7 @@ document.getElementById('back-button').addEventListener('click', function () {
 });
 
 function typeWriterEffect(element, text, speed = 50) {
-  let i = 0;
+  let i = 0;x
   element.textContent = '';
   let typingSound = document.getElementById('plushy-talk');
   function loopSound() {
