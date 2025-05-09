@@ -1,70 +1,82 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Kapselautomat Interface</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
   <script src="dat.gui.min.js" defer></script>
   <script src="script.js" defer></script>
   <script src="eia1_voyager_sdk.js" defer></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Jersey+10&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Jersey+10&display=swap" rel="stylesheet" />
 </head>
-<body>
-  <div class="vending-machine">
+<body class="screen-flicker">
+  <div class="scale-wrapper">
+    <div id="interface-wrapper">
+      
+      <button id="back-button" style="display: none;">Zurück</button>
 
-    <div class="input-group">
-      <label for="time">Verbrachte Zeit pro Woche:</label>
-      <div id="scale-container">
-        <div id="scale"></div>
-        <div id="figure">🚶‍♂️</div> <!-- Die Figur -->
+      <div class="vending-machine">
+        <div class="input-group">
+          <div class="time-label">Verbrachte Zeit pro Woche:</div>
+          <div id="scale-container">
+            <div id="scale"></div>
+            <div id="figure">🚶‍♂️</div>
+          </div>
+          <div class="main-text" , id="time-display"><span id="time-value">5</span> Stunden</div>
+        </div>
+        <button id="submit">Bestätigen</button>
+        <div id="dice-container" style="display: none;">
+          <div id="result" style="margin-top: 16px; font-size: 10px;"></div>
+        </div>
       </div>
-      <div id="time-display"><span id="time-value">5</span> Stunden</div>
+
+      <div id="capsule-container">
+        <img id="capsule" src="capsulesprite.jpg" alt="Kapsel" />
+        <div id="teddy-container"></div>
+        <div id="result"></div>
+      </div>
+
+      <div id="dragon-container">
+        <img id="dragon" src="Dragonsprite.png" alt="Drachenplüschtier" />
+      </div>
+
+      <div id="speech-bubble" style="display: none;">
+        <span id="speech-text"></span>
+      </div>
     </div>
-
-    <button id="submit">Bestätigen</button>
-
-    <div id="dice-container" style="display:none;">
-      <div id="result" style="margin-top: 16px; font-size: 10px;"></div>
-    </div>
   </div>
 
-  <div id="capsule-container">
-    <img id="capsule" src="capsulesprite.jpg" alt="Kapsel">
-    <div id="teddy-container"></div>
-    <div id="result"></div>
-    <button id="back-button" style="display: none;">Zurück</button>
-  </div>
+  <!-- Retro-Effekte -->
+  <div id="scanlines-overlay"></div>
+  <div id="noise-overlay"></div>
 
-<!-- Sound für Kapsel erscheinen -->
-<audio id="capsule-appear">
-  <source src="capsule-appear.wav" type="audio/wav">
-  Dein Browser unterstützt das Audio-Element nicht.
-</audio>
+  <!-- Sounds -->
+  <audio id="capsule-appear">
+    <source src="capsule-appear.wav" type="audio/wav" />
+    Dein Browser unterstützt das Audio-Element nicht.
+  </audio>
 
-<!-- Sound für Kapsel öffnen -->
-<audio id="capsule-open">
-  <source src="capsule-open.wav" type="audio/wav">
-  Dein Browser unterstützt das Audio-Element nicht.
-</audio>
+  <audio id="capsule-open">
+    <source src="capsule-open.wav" type="audio/wav" />
+    Dein Browser unterstützt das Audio-Element nicht.
+  </audio>
 
-<!-- Sound für das Tippen des Textes -->
-<audio id="plushy-talk" loop>
-  <source src="plushy-talk.wav" type="audio/wav">
-  Dein Browser unterstützt das Audio-Element nicht.
-</audio>
+  <audio id="plushy-talk" loop>
+    <source src="plushy-talk.wav" type="audio/wav" />
+    Dein Browser unterstützt das Audio-Element nicht.
+  </audio>
 
-
-  <div id="dragon-container">
-    <img id="dragon" src="Dragonsprite.png" alt="Drachenplüschtier" />
-  </div>
-
-  <div id="speech-bubble" style="display: none;">
-    <span id="speech-text"></span>
-  </div>
-
-
+  <audio id="click-sound">
+    <source src="button-press.wav" type="audio/wav" />
+    Dein Browser unterstützt das Audio-Element nicht.
+  </audio>
+  
+  <audio id="plush-appear">
+    <source src="plushy-appear.wav" type="audio/wav" />
+    Dein Browser unterstützt das Audio-Element nicht.
+  </audio>
 </body>
 </html>
