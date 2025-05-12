@@ -1,3 +1,77 @@
+// ----- Intro-Screen mit Video + "Press any button" ----------
+window.addEventListener('DOMContentLoaded', () => {
+  const introScreen = document.createElement('div');
+  introScreen.id = 'intro-screen';
+  introScreen.style.position = 'fixed';
+  introScreen.style.top = '0';
+  introScreen.style.left = '0';
+  introScreen.style.width = '100vw';
+  introScreen.style.height = '100vh';
+  introScreen.style.zIndex = '9999';
+  introScreen.style.overflow = 'hidden';
+  introScreen.style.backgroundColor = 'black';
+
+  // Hintergrundvideo
+  const video = document.createElement('video');
+  video.src = 'placeholder.mp4'; // Achte auf korrekten Pfad
+  video.autoplay = true;
+  video.loop = true;
+  video.muted = true;
+  video.playsInline = true;
+  video.style.width = '100%';
+  video.style.height = '100%';
+  video.style.objectFit = 'cover';
+  video.style.position = 'absolute';
+  video.style.top = '0';
+  video.style.left = '0';
+  introScreen.appendChild(video);
+
+  // Dreieck mit Text
+  const triangle = document.createElement('div');
+  triangle.style.position = 'absolute';
+  triangle.style.bottom = '0';
+  triangle.style.left = '0';
+  triangle.style.width = '0';
+  triangle.style.height = '0';
+  triangle.style.borderLeft = '160px solid transparent';
+  triangle.style.borderTop = '160px solid black';
+
+  const triangleText = document.createElement('div');
+  triangleText.innerText = 'Press any button to start';
+  triangleText.style.position = 'absolute';
+  triangleText.style.left = '12px';
+  triangleText.style.bottom = '12px';
+  triangleText.style.color = 'white';
+  triangleText.style.fontSize = '14px';
+  triangleText.style.transform = 'rotate(-45deg)';
+  triangle.appendChild(triangleText);
+
+  introScreen.appendChild(triangle);
+  document.body.appendChild(introScreen);
+
+  // Anwendung erstmal verstecken
+  const mainApp = document.getElementById('app'); // Oder dein Hauptcontainer
+  if (mainApp) {
+    mainApp.style.display = 'none';
+  }
+
+  // Entfernt Intro nach Tastendruck
+  function removeIntro() {
+    document.body.removeChild(introScreen);
+    if (mainApp) {
+      mainApp.style.display = ''; // App sichtbar machen
+    }
+    window.removeEventListener('keydown', removeIntro);
+    window.removeEventListener('click', removeIntro);
+  }
+
+  window.addEventListener('keydown', removeIntro);
+  window.addEventListener('click', removeIntro);
+});
+
+
+
+
 let comparisonText = '';
 let time = 5;
 let minTime = 1;
@@ -386,7 +460,7 @@ let moveDirection = null;
 let idleTimer;
 
 function startSpriteAnimation(direction) {
-  if (moveDirection === direction) return;
+  if (animationInterval && moveDirection === direction) return;
 
   moveDirection = direction;
 
@@ -429,3 +503,4 @@ document.getElementById('slider').addEventListener('input', function () {
   clearTimeout(idleTimer);
   idleTimer = setTimeout(stopSpriteAnimation, 300);
 });
+
