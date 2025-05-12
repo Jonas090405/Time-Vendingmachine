@@ -168,6 +168,22 @@ html, body {
   object-position: 0 0;
 }
 
+#Zebra {
+  display: none;
+  object-fit: none;
+  object-position: 0 0;
+}
+#Zebra-container {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  width: 442px;
+  height: 482px;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+
 /* ------------------- Speech Bubble ------------------- */
 #speech-bubble {
   font-family: "Jersey 10", sans-serif;
@@ -223,7 +239,7 @@ html, body {
   position: absolute;
   width: 20px;
   height: 20px;
-  background: #ff00e0;
+  background: linear-gradient(to right, #ff00e0, #8f00ff);
   clip-path: polygon(
     50% 0%, 61% 35%, 98% 35%,
     68% 57%, 79% 91%, 50% 70%,
@@ -298,7 +314,7 @@ html, body {
 
 /* ------------------- Sprechblasen Text Anwendungsbereich ------------------- */
 #speech-text {
-  animation: speech-text-flicker 5s infinite; /* 14s für den Intervall */
+  animation: speech-text-flicker 5s infinite; /* 5s für den Intervall */
 }
 
 
@@ -312,9 +328,9 @@ html, body {
   z-index: 9999;
   background-image: repeating-linear-gradient(
     to bottom,
-    rgba(0, 0, 0, 0.2) 0.5px,
-    rgba(0, 0, 0, 0.2) 1.1px,
-    transparent 1px,
+    rgba(0, 0, 0, 0.5) 0.5px,
+    rgba(0, 0, 0, 0.5) 1.1px,
+    transparent 2px,
     transparent 3px
   );
   mix-blend-mode: overlay;
@@ -330,7 +346,7 @@ html, body {
 }
 
 #noise-overlay {
-  opacity: .1;
+  opacity: .25;
   position: fixed;
   top: 0;
   left: 0;

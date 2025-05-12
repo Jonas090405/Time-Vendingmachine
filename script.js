@@ -30,7 +30,7 @@ const capsuleSprites = [
 
 const dragonSprites = [
   { src: "Dragonsprite.png", frameWidth: 453.9, totalFrames: 4 },
-  { src: "dragon2.png", frameWidth: 480, totalFrames: 6 },
+  { src: "Zebrasprite.png", frameWidth: 433.5, totalFrames: 4 },
   { src: "dragon3.png", frameWidth: 500, totalFrames: 5 }
 ];
 
@@ -122,7 +122,7 @@ function handleSubmit() {
         comparisonText = `Das entspricht etwa ${(totalActivityHoursInLife / 0.15).toFixed(1)} Hamburgern – mit extra Käse.`;
         break;
       case 6:
-        comparisonText = `Du könntest die Erde ${(totalActivityHoursInLife / (24 * 365 * 3)).toFixed(1)} Mal zu Fuß umrunden. Ohne Blasenpflaster.`;
+        comparisonText = `Du könntest die Erde ${(totalActivityHoursInLife / (24 * 365 * 3)).toFixed(1)} Mal zu Fuß umrunden.`;
         break;
       case 7:
         comparisonText = `Das wären etwa ${(totalActivityHoursInLife / 0.00278).toFixed(1)} olympische 100-Meter-Sprints. Usain wäre stolz.`;
@@ -130,6 +130,7 @@ function handleSubmit() {
       case 8:
         comparisonText = `Du könntest Minecraft Hardcore etwa ${(totalActivityHoursInLife / 50).toFixed(1)} Mal durchspielen – inklusive Redstone-Farmen und Netherite-Beacon.`;
         break;
+
     }
 
     capsule.src = selectedCapsule.src;
