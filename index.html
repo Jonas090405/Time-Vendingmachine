@@ -4,18 +4,41 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Kapselautomat Interface</title>
+
+  <!-- Stylesheets -->
   <link rel="stylesheet" href="style.css" />
-  <script src="dat.gui.min.js" defer></script>
-  <script src="script.js" defer></script>
-  <script src="eia1_voyager_sdk.js" defer></script>
+
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Jersey+10&display=swap" rel="stylesheet" />
+
+  <!-- Scripts -->
+  <script src="dat.gui.min.js" defer></script>
+  <script src="script.js" defer></script>
+  <script src="eia1_voyager_sdk.js" defer></script>
 </head>
-<body class="screen-flicker">
+
+<body>
+
+  <!-- Intro-Screen -->
+  <div id="intro-screen">
+    <!-- Hintergrundvideo -->
+    <video autoplay loop muted playsinline>
+      <source src="placeholder.mp4" type="video/mp4" />
+      Dein Browser unterstützt kein HTML5-Video.
+    </video>
+
+    <!-- Dreieck -->
+    <div id="intro-triangle"></div>
+
+    <!-- Text über dem Dreieck -->
+    <div id="triangle-text">Press any button to start</div>
+  </div>
+
+  <!-- Hauptinterface -->
   <div class="scale-wrapper">
     <div id="interface-wrapper">
-      
       <button id="back-button" style="display: none;">Zurück</button>
 
       <div class="vending-machine">
@@ -44,7 +67,7 @@
       </div>
 
       <div id="Zebra-container">
-        <img id="Zebra" src="Zebrasprite.png" alt="Drachenplüschtier" />
+        <img id="Zebra" src="Zebrasprite.png" alt="Zebra-Plüschtier" />
       </div>
 
       <div id="speech-bubble" style="display: none;">
@@ -58,7 +81,6 @@
   <div id="noise-overlay"></div>
 
   <!-- Sounds -->
-
   <audio id="bg-audio" loop>
     <source src="background_noise.wav" type="audio/mpeg">
     Dein Browser unterstützt kein HTML5-Audio.
@@ -66,27 +88,23 @@
 
   <audio id="capsule-appear">
     <source src="capsule-appear.wav" type="audio/wav" />
-    Dein Browser unterstützt das Audio-Element nicht.
   </audio>
 
   <audio id="capsule-open">
     <source src="capsule-open.wav" type="audio/wav" />
-    Dein Browser unterstützt das Audio-Element nicht.
   </audio>
 
   <audio id="plushy-talk" loop>
     <source src="plushy-talk.wav" type="audio/wav" />
-    Dein Browser unterstützt das Audio-Element nicht.
   </audio>
 
   <audio id="click-sound">
     <source src="button-press.wav" type="audio/wav" />
-    Dein Browser unterstützt das Audio-Element nicht.
   </audio>
-  
+
   <audio id="plush-appear">
     <source src="plushy-appear.wav" type="audio/wav" />
-    Dein Browser unterstützt das Audio-Element nicht.
   </audio>
+
 </body>
 </html>

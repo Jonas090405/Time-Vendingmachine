@@ -1,77 +1,53 @@
-// ----- Intro-Screen mit Video + "Press any button" ----------
 window.addEventListener('DOMContentLoaded', () => {
-  const introScreen = document.createElement('div');
-  introScreen.id = 'intro-screen';
-  introScreen.style.position = 'fixed';
-  introScreen.style.top = '0';
-  introScreen.style.left = '0';
-  introScreen.style.width = '100vw';
-  introScreen.style.height = '100vh';
-  introScreen.style.zIndex = '9999';
-  introScreen.style.overflow = 'hidden';
-  introScreen.style.backgroundColor = 'black';
-
-  // Hintergrundvideo
-  const video = document.createElement('video');
-  video.src = 'placeholder.mp4'; // Achte auf korrekten Pfad
-  video.autoplay = true;
-  video.loop = true;
-  video.muted = true;
-  video.playsInline = true;
-  video.style.width = '100%';
-  video.style.height = '100%';
-  video.style.objectFit = 'cover';
-  video.style.position = 'absolute';
-  video.style.top = '0';
-  video.style.left = '0';
-  introScreen.appendChild(video);
-
-  // Dreieck mit Text
-  const triangle = document.createElement('div');
-  triangle.style.position = 'absolute';
-  triangle.style.bottom = '0';
-  triangle.style.left = '0';
-  triangle.style.width = '0';
-  triangle.style.height = '0';
-  triangle.style.borderLeft = '160px solid transparent';
-  triangle.style.borderTop = '160px solid black';
-
-  const triangleText = document.createElement('div');
-  triangleText.innerText = 'Press any button to start';
-  triangleText.style.position = 'absolute';
-  triangleText.style.left = '12px';
-  triangleText.style.bottom = '12px';
-  triangleText.style.color = 'white';
-  triangleText.style.fontSize = '14px';
-  triangleText.style.transform = 'rotate(-45deg)';
-  triangle.appendChild(triangleText);
-
-  introScreen.appendChild(triangle);
-  document.body.appendChild(introScreen);
-
-  // Anwendung erstmal verstecken
-  const mainApp = document.getElementById('app'); // Oder dein Hauptcontainer
+  // Haupt-App verstecken
+  const mainApp = document.getElementById('interface-wrapper');
   if (mainApp) {
     mainApp.style.display = 'none';
   }
 
-  // Entfernt Intro nach Tastendruck
+  // Intro-Screen erstellen
+  const introScreen = document.createElement('div');
+  introScreen.id = 'intro-screen';
+
+  // Hintergrundvideo
+  const video = document.createElement('video');
+  video.src = 'placeholder.mp4'; // Pfad anpassen
+  video.autoplay = true;
+  video.loop = true;
+  video.muted = true;
+  video.playsInline = true;
+  introScreen.appendChild(video);
+
+  // Dreieck in der unteren linken Ecke
+  const triangle = document.createElement('div');
+  triangle.id = 'intro-triangle';
+
+  // Text im Dreieck
+  const triangleText = document.createElement('div');
+  triangleText.id = 'triangle-text';
+  triangleText.textContent = 'Press any button to start';
+
+  triangle.appendChild(triangleText);
+  introScreen.appendChild(triangle);
+  document.body.appendChild(introScreen);
+
+  // Funktion zum Entfernen des Intro-Screens
   function removeIntro() {
-    document.body.removeChild(introScreen);
-    if (mainApp) {
-      mainApp.style.display = ''; // App sichtbar machen
-    }
+    const introScreen = document.getElementById('intro-screen');
+    introScreen.style.transition = 'opacity 0.5s ease';
+    introScreen.style.opacity = '0';
+    setTimeout(() => {
+      introScreen.remove();
+      if (mainApp) mainApp.style.display = ''; // Zeige die Haupt-App
+    }, 500);
     window.removeEventListener('keydown', removeIntro);
     window.removeEventListener('click', removeIntro);
   }
 
+  // Auf Klick auf den Intro-Screen oder Tastendruck Intro entfernen
+  introScreen.addEventListener('click', removeIntro);
   window.addEventListener('keydown', removeIntro);
-  window.addEventListener('click', removeIntro);
 });
-
-
-
-
 let comparisonText = '';
 let time = 5;
 let minTime = 1;
@@ -94,6 +70,7 @@ window.addEventListener('DOMContentLoaded', () => {
     if (sound) sound.volume = 0.1; // 20% Lautstärke
   });
 });
+
 
 
 const capsuleSprites = [
