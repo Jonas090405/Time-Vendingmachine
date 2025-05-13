@@ -25,7 +25,7 @@ window.addEventListener('DOMContentLoaded', () => {
   // Text im Dreieck
   const triangleText = document.createElement('div');
   triangleText.id = 'triangle-text';
-  triangleText.textContent = 'Press any button to start';
+  triangleText.textContent = 'Bereit Zeit zu verschwenden?';
 
   triangle.appendChild(triangleText);
   introScreen.appendChild(triangle);
