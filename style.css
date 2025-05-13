@@ -395,17 +395,21 @@ html, body {
   left: 0;
   width: 0;
   height: 0;
-  border-bottom: 50vh solid #ff00e0;
+  border-bottom: 50vh solid #57008d;
   border-right: 50vw solid transparent;
   z-index: 1;
   animation: triangle-flicker 2s linear infinite;
+
+  /* Sanfter pinker Glow */
+  filter: drop-shadow(0 0 10px #bc51ff)
+          drop-shadow(0 0 50px #bc51ff);
 }
 
 #triangle-text {
   position: absolute;
-  bottom: -48vh;
-  left: 11vw;
-  transform: rotate(-45deg);
+  bottom: -42.5vh;          
+  left: 10vw;
+  transform: none;
   z-index: 10;
   color: #fff;
   font-size: 40px;
