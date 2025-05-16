@@ -418,8 +418,8 @@ html, body {
 
 #triangle-text {
   position: absolute;
-  bottom: -42.5vh;          
-  left: 10vw;
+  bottom: -40vh;          
+  left: 5vw;
   transform: none;
   z-index: 10;
   color: #fff;
@@ -429,7 +429,6 @@ html, body {
   pointer-events: none;
   animation: text-flicker 4s linear infinite;
 }
-
 
 /* ------------------- Flacker-Effekte ------------------- */
 @keyframes text-flicker {

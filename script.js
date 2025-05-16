@@ -167,33 +167,33 @@ selectedDragon = selectedPair.dragon;
     let totalActivityHoursInLife = hoursPerWeek * 52 * lifeExpectancy;
     let randomComparison = Math.floor(Math.random() * 9);
 
-    switch (randomComparison) {
+switch (randomComparison) {
       case 0:
-        comparisonText = `Damit könntest du etwa ${(totalActivityHoursInLife / (4000 * 6.5)).toFixed(1)} Bachelorabschlüsse machen.`;
+        comparisonText = `Damit hättest du schon ${(totalActivityHoursInLife / (4000 * 6.5)).toFixed(1)} Bachelorabschlüsse machen können, wenn du aufhörst ständig zu prokrastinieren, du fauler Sack.`;
         break;
       case 1:
-        comparisonText = `Das reicht für ${(totalActivityHoursInLife / (24 * 30)).toFixed(1)} Monate nonstop Katzenvideos.`;
+        comparisonText = `Das reicht für ${(totalActivityHoursInLife / (24 * 30)).toFixed(1)} Monate nonstop Lernvideos. Dann würdest auch mal was Lernen und endlich über's Grundschulnivau kommen.`;
         break;
       case 2:
-        comparisonText = `Genug Zeit für etwa ${(totalActivityHoursInLife / 2).toFixed(1)} Tinder-Dates – und trotzdem 0 Matches.`;
+        comparisonText = `Genug Zeit für etwa ${(totalActivityHoursInLife / 2).toFixed(1)} Tinder-Dates – und trotzdem 0 Matches, pfff.`;
         break;
       case 3:
-        comparisonText = `Reicht für etwa ${(totalActivityHoursInLife / 2).toFixed(1)} Netflix-Filme (falls du dich irgendwann entscheiden kannst).`;
+        comparisonText = `Reicht für etwa ${(totalActivityHoursInLife / 2).toFixed(1)} Netflix-Filme, aber ohne chill, da du sie eh immer alleine schauen wirst.`;
         break;
       case 4:
-        comparisonText = `Damit könntest du ${(totalActivityHoursInLife / (24 * 400)).toFixed(1)} Mal um die Welt reisen.`;
+        comparisonText = `Damit könntest du ${(totalActivityHoursInLife / (24 * 400)).toFixed(1)} Mal um die Welt reisen - vorausgesetzt, du findest den Weg von der Couch zur Tür überhaupt noch.`;
         break;
       case 5:
-        comparisonText = `Das entspricht etwa ${(totalActivityHoursInLife / 0.15).toFixed(1)} Hamburgern – mit extra Käse.`;
+        comparisonText = `Das entspricht etwa ${(totalActivityHoursInLife / 0.15).toFixed(1)} Hamburgern. Kommst ja eh kaum die Treppen noch runter, Fettsack. Bestell direkt wieder mit extra Käse, du atmender Fettberg.`;
         break;
       case 6:
-        comparisonText = `Du könntest die Erde ${(totalActivityHoursInLife / (24 * 365 * 3)).toFixed(1)} Mal zu Fuß umrunden.`;
+        comparisonText = `Theoretisch könntest du die Erde ${(totalActivityHoursInLife / (24 * 365 * 3)).toFixed(1)} Mal zu Fuß umrunden - praktisch gesehen schaffst du es ja grad so zum Kühlschrank. Und das mit einer 30-minütigen Pause dazwischen.`;
         break;
       case 7:
-        comparisonText = `Das wären etwa ${(totalActivityHoursInLife / 0.00278).toFixed(1)} olympische 100-Meter-Sprints. Usain wäre stolz.`;
+        comparisonText = `Das wären unglaubliche ${(totalActivityHoursInLife / 0.00278).toFixed(1)} olympische 100-Meter-Sprints. Usain Bolt wäre stolz, dass du daraus einen einzigen 100-Jahres-Sprint gemacht hättes.`;
         break;
       case 8:
-        comparisonText = `Du könntest Minecraft Hardcore etwa ${(totalActivityHoursInLife / 50).toFixed(1)} Mal durchspielen – inklusive Redstone-Farmen und Netherite-Beacon.`;
+        comparisonText = `Du könntest Minecraft Hardcore etwa ${(totalActivityHoursInLife / 50).toFixed(1)} Mal durchspielen – inklusive einem Full-Netherite-Beacon und allen Achievements. Für dich jedoch reine Fiktion und nur im Traum möglich.`;
         break;
 
     }
