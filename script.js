@@ -63,27 +63,39 @@ window.addEventListener('DOMContentLoaded', () => {
     document.getElementById('capsule-open'),
     document.getElementById('plushy-talk'),
     document.getElementById('click-sound'),
-    document.getElementById('plush-appear'), 
+    document.getElementById('plush-appear'),
   ];
 
   sounds.forEach(sound => {
-    if (sound) sound.volume = 0.1; // 20% Lautstärke
+    if (sound) sound.volume = 0.1; // 10% Lautstärke
   });
 });
 
 
 
-const capsuleSprites = [
-  { src: "capsulesprite.jpg", frameWidth: 320, totalFrames: 3 },
-  { src: "capsulesprite2.jpg", frameWidth: 320, totalFrames: 4 },
-  { src: "capsulesprite3.jpg", frameWidth: 320, totalFrames: 5 }
+const capsulePlushiePairs = [
+  {
+    capsule: { src: "Dragonscapsulesprite.png", frameWidth: 320, totalFrames: 3 },
+    dragon: { src: "Dragonsprite.png", frameWidth: 453.9, totalFrames: 4 }
+  },
+  {
+    capsule: { src: "Zebracapsulesprite.png", frameWidth: 320, totalFrames: 3 },
+    dragon: { src: "Zebrasprite.png", frameWidth: 433.5, totalFrames: 4 }
+  },
+  {
+    capsule: { src: "Fishcapsulesprite.png", frameWidth: 320, totalFrames: 3 },
+    dragon: { src: "Fishsprite.png", frameWidth: 464, totalFrames: 4 }
+  },
+  {
+    capsule: { src: "Capybaracapsulesprite.png", frameWidth: 320, totalFrames: 3 },
+    dragon: { src: "Capybarasprite.png", frameWidth: 464, totalFrames: 4 }
+  },
+  {
+    capsule: { src: "Dogcapsulesprite.png", frameWidth: 320, totalFrames: 3 },
+    dragon: { src: "Dogsprite.png", frameWidth: 464, totalFrames: 4 }
+  }
 ];
 
-const dragonSprites = [
-  { src: "Dragonsprite.png", frameWidth: 453.9, totalFrames: 4 },
-  { src: "Zebrasprite.png", frameWidth: 433.5, totalFrames: 4 },
-  { src: "dragon3.png", frameWidth: 500, totalFrames: 5 }
-];
 
 let selectedCapsule;
 let selectedDragon;
@@ -117,10 +129,10 @@ const submitButton = document.getElementById("submit");
 submitButton.addEventListener("click", function () {
   // Deaktiviert den Submit-Button, um mehrfaches Klicken zu verhindern
   const clickSound = document.getElementById('click-sound');
-if (clickSound) clickSound.play();
+  if (clickSound) clickSound.play();
 
   submitButton.disabled = true;
-  
+
   const button = this;
   const rect = button.getBoundingClientRect();
   const centerX = rect.left + rect.width / 2;
@@ -138,8 +150,10 @@ if (clickSound) clickSound.play();
 
 // ----------- Handle Submit Hauptfunktion ------------
 function handleSubmit() {
-  selectedCapsule = capsuleSprites[Math.floor(Math.random() * capsuleSprites.length)];
-  selectedDragon = dragonSprites[Math.floor(Math.random() * dragonSprites.length)];
+// Statt zwei separate Zufallswahlen
+const selectedPair = capsulePlushiePairs[Math.floor(Math.random() * capsulePlushiePairs.length)];
+selectedCapsule = selectedPair.capsule;
+selectedDragon = selectedPair.dragon;
 
   let diceContainer = document.getElementById('dice-container');
   let result = document.getElementById('result');
@@ -216,17 +230,17 @@ document.getElementById('capsule').addEventListener('click', function () {
 
   setTimeout(() => {
     capsule.style.display = 'none';
-  
+
     dragon.src = selectedDragon.src;
     dragon.style.objectPosition = '0 0';
     dragon.style.display = 'block';
-  
+
     // Sound beim Erscheinen des Tiers abspielen
     const plushAppearSound = document.getElementById('plush-appear');
     if (plushAppearSound) plushAppearSound.play();
-    }, 1200);
-  
-  
+  }, 1200);
+
+
 
   let frame = 0;
   let capsuleAnim = setInterval(() => {
@@ -272,7 +286,7 @@ function animateDragon(totalFrames, frameWidth, frameDuration, totalTime) {
 
 document.getElementById('back-button').addEventListener('click', function () {
   const clickSound = document.getElementById('click-sound');
-if (clickSound) clickSound.play();
+  if (clickSound) clickSound.play();
 
   // Deaktiviert den Back-Button, um mehrfaches Klicken zu verhindern
   this.disabled = true;
@@ -430,7 +444,7 @@ window.addEventListener('click', function () {
 
 
 let frameIndex = 0;
-let totalFrames = 2;
+let totalFrames = 4;
 let frameWidth = 55;
 let animationInterval;
 let moveDirection = null;
@@ -441,7 +455,7 @@ function startSpriteAnimation(direction) {
 
   moveDirection = direction;
 
-  
+
 
   // Bild wechseln je nach Richtung
   figure.style.backgroundImage = `url('Panda${direction}.png')`;
