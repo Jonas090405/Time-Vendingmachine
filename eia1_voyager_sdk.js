@@ -1,5 +1,14 @@
 let dataStream = '';
 
+let touchLocked = false;
+
+function lockTouchInput(duration = 300) {
+    touchLocked = true;
+    setTimeout(() => {
+        touchLocked = false;
+    }, duration);
+}
+
 
 function startConnection() {
     if (navigator.serial) {
@@ -109,17 +118,22 @@ function handleLoaded() {
 // Funktion, um Touch-Ereignis für Element 12 zu verarbeiten
 
 function handleTouch12() {
+    if (touchLocked) return;
+    lockTouchInput();
+
     const figureElement = document.getElementById("figure");
     if (isVisible(figureElement)) {
         console.log("Touch 12 = ← triggered");
         if (time > minTime) {
             time--;
             updateFigurePosition();
+            handleTouchFigure("left");
         }
     } else {
         console.log("Figure-Element nicht sichtbar.");
     }
 }
+
     
  // Wende Styling an und verarbeite das Touch-Ereignis für verschiedene Teile des Quiz
 
@@ -133,22 +147,23 @@ function isVisible(el) {
 
 // Funktion zum Verarbeiten von Touch 14
 function handleTouch14() {
+    if (touchLocked) return;
+    lockTouchInput();
+
     const submitButton = document.getElementById("submit");
     if (isVisible(submitButton)) {
-        submitButton.click(); // Simuliert den Klick auf den Submit-Button
+        submitButton.click();
         submitButton.classList.add("active");
-
-        // Optionaler Feedback-Effekt
         setTimeout(() => {
             submitButton.classList.remove("active");
-        }, 200);
+        }, 500);
     } else {
         console.log("Submit-Button ist gerade nicht sichtbar.");
     }
 
     const capsule = document.getElementById("capsule");
     if (isVisible(capsule)) {
-        capsule.click(); // Simuliert den Klick auf die Kapsel
+        capsule.click();
         console.log("Kapsel geöffnet über Touch");
     } else {
         console.log("Kapsel nicht sichtbar.");
@@ -156,10 +171,16 @@ function handleTouch14() {
 }
 
 
+
 function handleTouch27() {
+    if (touchLocked) return;
+    lockTouchInput();
+
     const backBtn = document.getElementById("back-button");
     if (isVisible(backBtn)) {
-        backBtn.click(); // Simuliert Klick auf Zurück
+        backBtn.click();
+        backBtn.classList.add("active");
+        setTimeout(() => backBtn.classList.remove("active"), 500);
         console.log("Back-Button gedrückt über Touch 27");
     } else {
         console.log("Back-Button nicht sichtbar.");
@@ -170,14 +191,17 @@ function handleTouch27() {
     
 
 
-// Funktion zum Verarbeiten von Touch 32
 function handleTouch32() {
+    if (touchLocked) return;
+    lockTouchInput();
+
     console.log("Touch 32 = → triggered");
     const figureElement = document.getElementById("figure");
     if (isVisible(figureElement)) {
         if (time < maxTime) {
             time++;
             updateFigurePosition();
+            handleTouchFigure("right");
         }
     } else {
         console.log("Figure-Element nicht sichtbar.");
@@ -185,17 +209,37 @@ function handleTouch32() {
 }
 
 
-// Funktion, um das Styling für die Figur auf der Skala zu verarbeiten
-function handleTouchFigure(stylingClass) {
+
+function handleTouchFigure(direction) {
     let figureElement = document.getElementById("figure");
-    if (figureElement) {
-        figureElement.className = "figure"; // Setzt auf Grundklasse zurück (optional)
-        figureElement.classList.add(stylingClass);
-    } else {
+    if (!figureElement) {
         console.error("Figure element not found");
+        return;
+    }
+
+    if (direction === 'left' || direction === 'right') {
+        startSpriteAnimation(direction); // Startet die Animation + wechselt Spritesheet
+        clearTimeout(idleTimer);
+        idleTimer = setTimeout(stopSpriteAnimation, 300);
+    } else {
+        stopSpriteAnimation();
     }
 }
 
+function startSpriteAnimation(direction) {
+    if (animationInterval && moveDirection === direction) return;
+  
+    moveDirection = direction;
+    figure.style.backgroundImage = `url('Panda${direction}.png')`; // <- Hier passiert der Spritesheet-Wechsel
+  
+    clearInterval(animationInterval);
+    animationInterval = setInterval(() => {
+      frameIndex = (frameIndex + 1) % totalFrames;
+      const offsetX = -frameIndex * frameWidth;
+      figure.style.backgroundPosition = `${offsetX}px 0px`;
+    }, 150);
+  }
+  
 
 
 function handleTouch33() {

@@ -75,7 +75,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 const capsulePlushiePairs = [
   {
-    capsule: { src: "Dragonscapsulesprite.png", frameWidth: 320, totalFrames: 3 },
+    capsule: { src: "Dragonscapsulesprite.jpg", frameWidth: 320, totalFrames: 3 },
     dragon: { src: "Dragonsprite.png", frameWidth: 453.9, totalFrames: 4 }
   },
   {
