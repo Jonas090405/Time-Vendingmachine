@@ -76,23 +76,23 @@ window.addEventListener('DOMContentLoaded', () => {
 const capsulePlushiePairs = [
   {
     capsule: { src: "Dragonscapsulesprite.jpg", frameWidth: 320, totalFrames: 3 },
-    dragon: { src: "Dragonsprite.png", frameWidth: 453.9, totalFrames: 4 }
+    dragon: { src: "Dragonsprite.png", frameWidth: 424, totalFrames: 4 }
   },
   {
     capsule: { src: "Zebracapsulesprite.png", frameWidth: 320, totalFrames: 3 },
-    dragon: { src: "Zebrasprite.png", frameWidth: 433.5, totalFrames: 4 }
+    dragon: { src: "Zebrasprite.png", frameWidth: 433, totalFrames: 4 }
   },
   {
     capsule: { src: "Fishcapsulesprite.png", frameWidth: 320, totalFrames: 3 },
-    dragon: { src: "Fishsprite.png", frameWidth: 464, totalFrames: 4 }
+    dragon: { src: "Fishsprite.png", frameWidth: 441, totalFrames: 4 }
   },
   {
     capsule: { src: "Capybaracapsulesprite.png", frameWidth: 320, totalFrames: 3 },
-    dragon: { src: "Capybarasprite.png", frameWidth: 464, totalFrames: 4 }
+    dragon: { src: "Capybarasprite.png", frameWidth: 434, totalFrames: 4 }
   },
   {
     capsule: { src: "Dogcapsulesprite.png", frameWidth: 320, totalFrames: 3 },
-    dragon: { src: "Dogsprite.png", frameWidth: 464, totalFrames: 4 }
+    dragon: { src: "Dogsprite.png", frameWidth: 427, totalFrames: 4 }
   }
 ];
 
@@ -187,7 +187,7 @@ switch (randomComparison) {
         comparisonText = `Das entspricht etwa ${(totalActivityHoursInLife / 0.15).toFixed(1)} Hamburgern. Kommst ja eh kaum die Treppen noch runter, Fettsack. Bestell direkt wieder mit extra Käse, du atmender Fettberg.`;
         break;
       case 6:
-        comparisonText = `Theoretisch könntest du die Erde ${(totalActivityHoursInLife / (24 * 365 * 3)).toFixed(1)} Mal zu Fuß umrunden - praktisch gesehen schaffst du es ja grad so zum Kühlschrank. Und das mit einer 30-minütigen Pause dazwischen.`;
+        comparisonText = `Theoretisch könntest du die Erde ${(totalActivityHoursInLife / (24 * 365 * 3)).toFixed(1)} Mal zu Fuß umrunden - praktisch gesehen schaffst du es ja grad so zum Kühlschrank. Dazwischen ne 30-minütige Pause.`;
         break;
       case 7:
         comparisonText = `Das wären unglaubliche ${(totalActivityHoursInLife / 0.00278).toFixed(1)} olympische 100-Meter-Sprints. Usain Bolt wäre stolz, dass du daraus einen einzigen 100-Jahres-Sprint gemacht hättes.`;
