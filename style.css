@@ -160,7 +160,7 @@ html, body {
 #dragon-container {
   position: absolute;
   bottom: 50px;
-  right: 50px;
+  right: 20px;
   width: 442px;
   height: 482px;
   overflow: hidden;
@@ -174,21 +174,7 @@ html, body {
   object-position: 0 0;
 }
 
-#Zebra {
-  display: none;
-  object-fit: none;
-  object-position: 0 0;
-}
-#Zebra-container {
-  position: absolute;
-  bottom: 50px;
-  right: 50px;
-  width: 442px;
-  height: 482px;
-  overflow: hidden;
-  border-radius: 12px;
-  transform: scale(1.2);
-}
+
 
 
 /* ------------------- Speech Bubble ------------------- */
@@ -197,7 +183,7 @@ html, body {
   display: none;
   position: absolute;
   top: 30%;
-  left: 20%;
+  left: 15%;
   transform: scale(1.5);
   background-color: rgba(255, 255, 255, 0.05);
   padding: 16px;
