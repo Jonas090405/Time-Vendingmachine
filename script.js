@@ -70,7 +70,7 @@ window.addEventListener('DOMContentLoaded', () => {
   ];
 
   sounds.forEach(sound => {
-    if (sound) sound.volume = 0.3; // 10% Lautstärke
+    if (sound) sound.volume = 0.03; // 10% Lautstärke
   });
 });
 
@@ -442,12 +442,12 @@ window.addEventListener('click', function () {
   const idleAudio = document.getElementById('Idlemusic');
 
   if (bgAudio.paused) {
-    bgAudio.volume = 0.4; // Leiser machen (0.0 bis 1.0)
+    bgAudio.volume = 0.12; // Leiser machen (0.0 bis 1.0)
     bgAudio.play();
   }
 
   if (idleAudio.paused) {
-    idleAudio.volume = 0.4; // Etwas andere Lautstärke, wenn gewünscht
+    idleAudio.volume = 0.01; 
     idleAudio.play();
   }
 }, { once: true });

@@ -356,6 +356,9 @@ html, body {
   z-index: 10000;
 }
 
+#Idle {
+  opacity: 0.1
+}
 
 
 /* ------------------- Intro-Screen ------------------- */
