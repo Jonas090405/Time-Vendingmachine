@@ -64,6 +64,8 @@ window.addEventListener('DOMContentLoaded', () => {
     document.getElementById('plushy-talk'),
     document.getElementById('click-sound'),
     document.getElementById('plush-appear'),
+    document.getElementById('Idlemusic'),
+
   ];
 
   sounds.forEach(sound => {
@@ -435,12 +437,20 @@ function createStars(button) {
 
 // Startet Audio beim ersten Klick
 window.addEventListener('click', function () {
-  const audio = document.getElementById('bg-audio');
-  if (audio.paused) {
-    audio.volume = 0.035; // Leiser machen (0.0 bis 1.0)
-    audio.play();
+  const bgAudio = document.getElementById('bg-audio');
+  const idleAudio = document.getElementById('Idlemusic');
+
+  if (bgAudio.paused) {
+    bgAudio.volume = 0.04; // Leiser machen (0.0 bis 1.0)
+    bgAudio.play();
+  }
+
+  if (idleAudio.paused) {
+    idleAudio.volume = 0.02; // Etwas andere Lautstärke, wenn gewünscht
+    idleAudio.play();
   }
 }, { once: true });
+
 
 
 let frameIndex = 0;
