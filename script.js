@@ -259,7 +259,7 @@ document.getElementById('capsule').addEventListener('click', function () {
         dragon.style.objectPosition = '0 0';
         dragon.style.display = 'block';
 
-        animateDragon(selectedDragon.totalFrames, selectedDragon.frameWidth, 200, 5000);
+        animateDragon(selectedDragon.totalFrames, selectedDragon.frameWidth, 200, 7500);
 
         speechBubble.style.display = 'block';
         typeWriterEffect(speechTextElement, comparisonText, 50);
@@ -442,12 +442,12 @@ window.addEventListener('click', function () {
   const idleAudio = document.getElementById('Idlemusic');
 
   if (bgAudio.paused) {
-    bgAudio.volume = 0.12; // Leiser machen (0.0 bis 1.0)
+    bgAudio.volume = 0.08; // Leiser machen (0.0 bis 1.0)
     bgAudio.play();
   }
 
   if (idleAudio.paused) {
-    idleAudio.volume = 0.01; 
+    idleAudio.volume = 0.07; 
     idleAudio.play();
   }
 }, { once: true });
