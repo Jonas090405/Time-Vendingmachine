@@ -155,56 +155,67 @@ function showCapsule() {
   document.getElementById('submit').style.display = 'none';
   document.getElementById('dice-container').style.display = 'none';
   document.getElementById('teddy-container').style.display = 'none';
+  document.querySelector('.vending-machine').style.display = 'none'; // 👈 HIER ergänzt
   document.getElementById('capsule-appear')?.play();
 }
 
 
 function showCountdownScreen() {
-  const countdownScreen = document.getElementById('countdown-screen');
-  const countdownText = document.getElementById('countdown-message');  // neuer Text-Container
-  const countdownTimer = document.getElementById('countdown-timer');
+  const countdownScreen = document.getElementById("countdown-screen");
+  const countdownText = document.getElementById("countdown-text");
 
-  // Text setzen (optional)
-  countdownText.textContent = "Bitte warte noch:";
-
+  // Alle anderen Elemente verstecken
   document.getElementById('capsule-container').style.display = 'none';
   document.querySelectorAll('.input-group').forEach(group => group.style.display = 'none');
   document.getElementById('submit').style.display = 'none';
+  document.getElementById('dice-container').style.display = 'none';
+  document.getElementById('teddy-container').style.display = 'none';
   document.querySelector('.vending-machine').style.display = 'none';
+  document.getElementById('back-button').style.display = 'none';
 
   countdownScreen.style.display = 'block';
 
   const freezeUntil = parseInt(localStorage.getItem("capsuleFreezeUntil"), 10);
-  const now = Date.now();
 
-  const interval = setInterval(() => {
-    const remaining = Math.max(0, freezeUntil - Date.now());
-    const seconds = Math.ceil(remaining / 1000);
-    countdownTimer.textContent = `${seconds} Sekunden`;
+ const interval = setInterval(() => {
+  const remaining = Math.max(0, freezeUntil - Date.now());
 
-    if (remaining <= 0) {
-      clearInterval(interval);
-      localStorage.removeItem("capsuleFreezeUntil");
-      countdownScreen.style.display = 'none';
+  const msPerDay = 1000 * 60 * 60 * 24;
+  const msPerYear = msPerDay * 365;
 
-      // E-Mail senden mit statischem Inhalt aus Template
-      const email = localStorage.getItem("userEmail") || '';
+  const years = Math.floor(remaining / msPerYear);
+  const days = Math.floor((remaining % msPerYear) / msPerDay);
 
-      if (email) {
-        emailjs.send('service_rojceoa', 'template_tqsybkb', {
-          to_email: email
-        }, '5w_nLDBqiwnNhvAKy')
-          .then(() => {
-            console.log('Email erfolgreich gesendet!');
-          }, (error) => {
-            console.error('Email-Fehler:', error);
-          });
-      }
+  let text = "Deine Kryokapsel ist noch für ";
+  if (years > 0) text += `${years} Jahr${years > 1 ? 'e' : ''}`;
+  if (years > 0 && days > 0) text += " und ";
+  if (days > 0) text += `${days} Tag${days > 1 ? 'e' : ''}`;
+  if (years === 0 && days === 0) text += "weniger als einen Tag";
 
-      showCapsule();
+  text += " eingefroren";
+
+  countdownText.textContent = text;
+
+  if (remaining <= 0) {
+    clearInterval(interval);
+    localStorage.removeItem("capsuleFreezeUntil");
+
+    countdownScreen.style.display = 'none';
+
+    const email = localStorage.getItem("userEmail") || '';
+    if (email) {
+      emailjs.send('service_rojceoa', 'template_tqsybkb', {
+        to_email: email
+      }, '5w_nLDBqiwnNhvAKy').then(() => {
+        console.log('Email erfolgreich gesendet!');
+      }, (error) => {
+        console.error('Email-Fehler:', error);
+      });
     }
-  }, 1000);
 
+    showCapsule();
+  }
+}, 1000);
 }
 // ----------- Kapsel öffnen und Drache animieren ----------
 document.getElementById('capsule').addEventListener('click', function () {

@@ -107,12 +107,12 @@ body {
 .input-group input {
   width: 600px;
   padding: 14px 16px;
-  background-color: #ccf6f2;
+  background-color: #c2fdf7;
   font-size: 1.2rem;
   border: 2px solid #ffbaf7;
   border-radius: 10px;
   transition: border-color 0.3s, box-shadow 0.3s;
-  color: #ff00e0;
+  color: #ff66ed;
   font-family: "Jersey 10", sans-serif;
 }
 
@@ -155,7 +155,6 @@ body {
   background: linear-gradient(to bottom, #c300ff, #56007c);
   box-shadow: 0 1px 0 #000, 0 0 20px #e100ff;
   transform: scale(1.1);
-
 }
 
 /* ------------------- Capsule / Dragon ------------------- */
@@ -262,9 +261,9 @@ body {
 
 }
 
-#back:hover {
-  transform: scale(1.05);
-  box-shadow: 0 1px 0 #000, 0 0 20px #ccc;
+#back-button:hover {
+  transform: scale(1.65);
+  box-shadow: 0 1px 0 #000, 0 0 25px #ff00e0;
 }
 
 
@@ -641,10 +640,6 @@ body {
     font-size: 20px;
     padding: 12px 16px;
     width: 90%;
-    max-width: 320px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    box-sizing: border-box;
   }
 
 
@@ -815,14 +810,40 @@ body {
   }
 }
 
-#countdown-screen {
+.countdown-overlay {
   position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0,0,0,0.8);
-  color: white;
-  display: none !important;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.8);
+  /* halbtransparentes Schwarz */
+  display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 2rem;
   z-index: 9999;
+}
+
+#countdown-text {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  font-size: clamp(1.5rem, 5vw, 3rem);
+  /* Responsive Schriftgröße */
+  text-align: center;
+  padding: 1rem;
+  max-width: 90vw;
+  /* Verhindert Textüberlauf auf kleinen Bildschirmen */
+  word-wrap: break-word;
+  animation: text-flicker 2.5s infinite;
+
+}
+
+@media (max-width: 400px) {
+  #countdown-text {
+    font-size: 1.2rem;
+    transform: translate(-50%, -50%) scale(1.2);
+  }
 }

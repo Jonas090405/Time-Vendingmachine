@@ -42,13 +42,6 @@
 
         <button id="submit">Kapsel einfrieren</button>
 
-        <div id="countdown-screen" style="display:none;">
-          <div id="countdown-message">
-            Wartezeit bis zur nächsten Kapselöffnung:
-          </div>
-          <div id="countdown-timer"></div>
-        </div>
-
         <div id="dice-container" style="display: none;">
           <div id="result" style="margin-top: 16px; font-size: 10px;"></div>
         </div>
@@ -67,6 +60,12 @@
       <div id="speech-bubble" style="display: none;">
         <span id="speech-text"></span>
       </div>
+    </div>
+  </div>
+
+  <div id="countdown-screen" style="display: none;" class="countdown-overlay">
+    <div class="countdown-box">
+      <p id="countdown-text">Bitte warte einen Moment…</p>
     </div>
   </div>
 
