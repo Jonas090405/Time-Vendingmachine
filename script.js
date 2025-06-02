@@ -1,3 +1,5 @@
+const CAPSULE_FREEZE_DURATION = 10; // Sekunden
+/*
 window.addEventListener('DOMContentLoaded', () => {
   // Haupt-App verstecken
   const mainApp = document.getElementById('interface-wrapper');
@@ -47,6 +49,16 @@ window.addEventListener('DOMContentLoaded', () => {
   introScreen.addEventListener('click', removeIntro);
   window.addEventListener('keydown', removeIntro);
 });
+*/
+function safeShowCapsule() {
+  const capsule = document.getElementById('capsule');
+  const container = document.getElementById('capsule-container');
+  if (!capsule || !container) {
+    setTimeout(safeShowCapsule, 100); // Noch nicht bereit → später erneut versuchen
+    return;
+  }
+  showCapsule();
+}
 
 let isTyping = false;
 
@@ -66,6 +78,13 @@ window.addEventListener('DOMContentLoaded', () => {
     if (sound) sound.volume = 0.03; // 10% Lautstärke
   });
 });
+
+
+const cheekyComments = [
+  "schauen wir mal was du dir so vorgenommen hast und es mal wieder nicht eingehalt hast:",
+  "Mal schauen welche Vorsätze du dir gesetzt hast (und nicht eingehalten hast):",
+  "Erinnerst du dich noch an deine Vorsätze? Wahrscheinlich nicht, oder?:",
+];
 
 
 
@@ -123,60 +142,103 @@ submitButton.addEventListener("click", function () {
 
 // ----------- Handle Submit Hauptfunktion ------------
 function handleSubmit() {
-// Statt zwei separate Zufallswahlen
-const selectedPair = capsulePlushiePairs[Math.floor(Math.random() * capsulePlushiePairs.length)];
-selectedCapsule = selectedPair.capsule;
-selectedDragon = selectedPair.dragon;
+  const capsuleOpened = localStorage.getItem("capsuleOpened");
 
-  let diceContainer = document.getElementById('dice-container');
-  let result = document.getElementById('result');
-  let capsuleContainer = document.getElementById('capsule-container');
-  let inputGroup = document.querySelectorAll('.input-group');
-  let capsule = document.getElementById('capsule');
-    const userQuestion = document.getElementById('user-question').value.trim();
-    const userEmail = document.getElementById('user-email').value.trim();
-    
-    if (userQuestion === '') {
-      alert("Bitte beantworte die Frage, bevor du fortfährst.");
-      submitButton.disabled = false;
-      return;
-    }
-  
-    // Optional: einfache E-Mail-Validierung
-    if (userEmail && !/^\S+@\S+\.\S+$/.test(userEmail)) {
-      alert("Bitte gib eine gültige E-Mail-Adresse ein.");
-      submitButton.disabled = false;
-      return;
-    }
-  
-    // Speichere oder nutze die Eingaben:
-    console.log("Antwort:", userQuestion);
-    console.log("E-Mail (optional):", userEmail);
-  
-  
-  
-    capsule.src = selectedCapsule.src;
-    capsule.style.display = 'block';
-    capsule.style.objectPosition = '0 0';
-    capsule.style.pointerEvents = 'auto';
+  const freezeUntilStored = parseInt(localStorage.getItem("capsuleFreezeUntil"), 10);
+  const now = Date.now();
 
-    screen.innerHTML = `Öffne deine Kapsel!`;
-
-    submitButton.style.display = 'none';
-    inputGroup.forEach(group => group.style.display = 'none');
-    capsuleContainer.style.display = 'block';
-    diceContainer.style.display = 'none';
-    document.getElementById('teddy-container').style.display = 'none';
-    result.innerHTML = '';
-    document.getElementById('back-button').style.display = 'none';
-    document.querySelector('.vending-machine').style.display = 'none';
-
-    document.getElementById('capsule-appear')?.play();
+  if (capsuleOpened !== "true" && freezeUntilStored && now < freezeUntilStored) {
+    alert("Bitte öffne zuerst die Kapsel bevor du eine neue auswählst.");
+    submitButton.disabled = false;
+    return;
   }
+
+  const selectedPair = capsulePlushiePairs[Math.floor(Math.random() * capsulePlushiePairs.length)];
+  selectedCapsule = selectedPair.capsule;
+  selectedDragon = selectedPair.dragon;
+
+  const userQuestion = document.getElementById('user-question').value.trim();
+  const userEmail = document.getElementById('user-email').value.trim();
+
+  if (userQuestion === '') {
+    alert("Bitte beantworte die Frage.");
+    submitButton.disabled = false;
+    return;
+  }
+
+  if (userEmail && !/^\S+@\S+\.\S+$/.test(userEmail)) {
+    alert("Bitte gib eine gültige E-Mail-Adresse ein.");
+    submitButton.disabled = false;
+    return;
+  }
+
+  const freezeUntil = now + CAPSULE_FREEZE_DURATION * 1000;
+  localStorage.setItem("capsuleFreezeUntil", freezeUntil);
+  localStorage.setItem("selectedCapsule", JSON.stringify(selectedCapsule));
+  localStorage.setItem("selectedDragon", JSON.stringify(selectedDragon));
+  localStorage.setItem("capsuleOpened", "false");
+  localStorage.setItem("userQuestion", userQuestion); // NEU: Frage speichern
+
+  showCountdownScreen();
+}
+
+
+function showCapsule() {
+  let capsule = document.getElementById('capsule');
+  let capsuleContainer = document.getElementById('capsule-container');
+
+  capsule.src = selectedCapsule.src;
+  capsule.style.display = 'block';
+  capsule.style.objectPosition = '0 0';
+  capsule.style.pointerEvents = 'auto';
+
+  capsuleContainer.style.display = 'block';
+
+  // ➕ Diese Elemente ausblenden:
+  document.querySelectorAll('.input-group').forEach(group => group.style.display = 'none');
+  document.getElementById('submit').style.display = 'none';
+  document.getElementById('dice-container').style.display = 'none';
+  document.getElementById('teddy-container').style.display = 'none';
+  document.querySelector('.vending-machine').style.display = 'none';
+
+  document.getElementById('capsule-appear')?.play();
+}
+
+
+function showCountdownScreen() {
+  const countdownScreen = document.getElementById('countdown-screen');
+  const countdownText = document.getElementById('countdown-text');
+  const countdownTimer = document.getElementById('countdown-timer');
+
+  document.getElementById('capsule-container').style.display = 'none';
+  document.querySelectorAll('.input-group').forEach(group => group.style.display = 'none');
+  document.getElementById('submit').style.display = 'none';
+  document.getElementById('dice-container').style.display = 'none';
+  document.getElementById('teddy-container').style.display = 'none';
+  document.querySelector('.vending-machine').style.display = 'none';
+
+  countdownScreen.style.display = 'block';
+
+  const interval = setInterval(() => {
+    const freezeUntil = parseInt(localStorage.getItem("capsuleFreezeUntil"), 10);
+    const now = Date.now();
+    const remainingSeconds = Math.max(0, Math.ceil((freezeUntil - now) / 1000));
+    countdownTimer.textContent = remainingSeconds;
+
+    if (remainingSeconds <= 0) {
+      clearInterval(interval);
+      localStorage.removeItem("capsuleFreezeUntil");
+      countdownScreen.style.display = 'none';
+      showCapsule();
+    }
+  }, 1000);
+}
+
 
 
 // ----------- Kapsel öffnen und Drache animieren ----------
 document.getElementById('capsule').addEventListener('click', function () {
+  localStorage.setItem("capsuleOpened", "true"); // Kapsel wurde jetzt geöffnet
   let capsule = document.getElementById('capsule');
   let dragon = document.getElementById('dragon');
   let speechBubble = document.getElementById('speech-bubble');
@@ -216,7 +278,11 @@ document.getElementById('capsule').addEventListener('click', function () {
         animateDragon(selectedDragon.totalFrames, selectedDragon.frameWidth, 200, 7500);
 
         speechBubble.style.display = 'block';
-        typeWriterEffect(speechTextElement, 50);
+        const savedQuestion = localStorage.getItem("userQuestion") || "🤖";
+        const randomComment = cheekyComments[Math.floor(Math.random() * cheekyComments.length)];
+        const fullText = `${randomComment}\n\n"${savedQuestion}"`;
+
+        typeWriterEffect(speechTextElement, fullText, 50);
 
         screen.innerHTML = `Berechnung abgeschlossen!`;
         backButton.style.display = 'block';
@@ -280,6 +346,9 @@ document.getElementById('back-button').addEventListener('click', function () {
   document.getElementById('dice-container').style.display = '';
   document.getElementById('teddy-container').style.display = '';
   document.querySelector('.vending-machine').style.display = '';
+
+  localStorage.removeItem("userQuestion");
+
 
   this.style.display = 'none';
 
@@ -385,6 +454,16 @@ function createStars(button) {
     }
   });
 }
+function showForm() {
+  document.getElementById('capsule-container').style.display = 'none';
+  document.getElementById('countdown-screen').style.display = 'none';
+  document.querySelectorAll('.input-group').forEach(group => group.style.display = '');
+  document.getElementById('submit').style.display = '';
+  document.getElementById('dice-container').style.display = '';
+  document.getElementById('teddy-container').style.display = '';
+  document.querySelector('.vending-machine').style.display = '';
+  document.getElementById('back-button').style.display = 'none';
+}
 
 
 // Startet Audio beim ersten Klick
@@ -398,8 +477,35 @@ window.addEventListener('click', function () {
   }
 
   if (idleAudio.paused) {
-    idleAudio.volume = 0.07; 
+    idleAudio.volume = 0.07;
     idleAudio.play();
   }
 }, { once: true });
 
+
+window.addEventListener('DOMContentLoaded', () => {
+  const freezeUntil = parseInt(localStorage.getItem("capsuleFreezeUntil"), 10);
+  const storedCapsule = localStorage.getItem("selectedCapsule");
+  const storedDragon = localStorage.getItem("selectedDragon");
+  const capsuleOpened = localStorage.getItem("capsuleOpened");
+  const now = Date.now();
+
+  if (storedCapsule && storedDragon) {
+    selectedCapsule = JSON.parse(storedCapsule);
+    selectedDragon = JSON.parse(storedDragon);
+
+    if (freezeUntil && now < freezeUntil) {
+      // Timer läuft noch → Countdown zeigen
+      showCountdownScreen();
+    } else if (capsuleOpened === "true") {
+      // Kapsel wurde geöffnet → Formular zurückzeigen
+      showForm();
+    } else {
+      // Kapsel wurde NICHT geöffnet → Kapsel zeigen, nicht zurücksetzen!
+      showCapsule();
+    }
+  } else {
+    // Kein Zustand gespeichert → Formular anzeigen
+    showForm();
+  }
+});
