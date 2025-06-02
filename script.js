@@ -178,6 +178,8 @@ function handleSubmit() {
   localStorage.setItem("selectedDragon", JSON.stringify(selectedDragon));
   localStorage.setItem("capsuleOpened", "false");
   localStorage.setItem("userQuestion", userQuestion); // NEU: Frage speichern
+  localStorage.setItem("userEmail", userEmail); // <-- NEU
+
 
   showCountdownScreen();
 }
@@ -219,23 +221,38 @@ function showCountdownScreen() {
 
   countdownScreen.style.display = 'block';
 
+  const freezeUntil = parseInt(localStorage.getItem("capsuleFreezeUntil"), 10);
+  const now = Date.now();
+
   const interval = setInterval(() => {
-    const freezeUntil = parseInt(localStorage.getItem("capsuleFreezeUntil"), 10);
-    const now = Date.now();
-    const remainingSeconds = Math.max(0, Math.ceil((freezeUntil - now) / 1000));
-    countdownTimer.textContent = remainingSeconds;
+    const remaining = Math.max(0, freezeUntil - Date.now());
+    const seconds = Math.ceil(remaining / 1000);
+    countdownTimer.textContent = `${seconds} Sekunden`;
 
-    if (remainingSeconds <= 0) {
-      clearInterval(interval);
-      localStorage.removeItem("capsuleFreezeUntil");
-      countdownScreen.style.display = 'none';
-      showCapsule();
-    }
-  }, 1000);
+if (remaining <= 0) {
+  clearInterval(interval);
+  localStorage.removeItem("capsuleFreezeUntil");
+  countdownScreen.style.display = 'none';
+
+  // E-Mail senden mit statischem Inhalt aus Template
+  const email = localStorage.getItem("userEmail") || '';
+
+  if (email) {
+    emailjs.send('service_rojceoa', 'template_tqsybkb', {
+      to_email: email
+    }, '5w_nLDBqiwnNhvAKy')
+    .then(() => {
+      console.log('Email erfolgreich gesendet!');
+    }, (error) => {
+      console.error('Email-Fehler:', error);
+    });
+  }
+
+  showCapsule();
 }
+}, 1000);
 
-
-
+}
 // ----------- Kapsel öffnen und Drache animieren ----------
 document.getElementById('capsule').addEventListener('click', function () {
   localStorage.setItem("capsuleOpened", "true"); // Kapsel wurde jetzt geöffnet
@@ -404,6 +421,7 @@ function typeWriterEffect(element, text, speed = 50) {
 
   type();
 }
+
 
 
 function showStars(x, y) {
