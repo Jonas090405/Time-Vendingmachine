@@ -14,50 +14,51 @@
   <link href="https://fonts.googleapis.com/css2?family=Jersey+10&display=swap" rel="stylesheet" />
 
   <!-- Scripts -->
-  <script src="dat.gui.min.js" defer></script>
   <script src="script.js" defer></script>
-  <script src="eia1_voyager_sdk.js" defer></script>
 </head>
 
 <body>
 
   <!-- Intro-Screen -->
   <div id="intro-screen">
-    <!-- Hintergrundvideo -->
     <video id="Idle" loop muted playsinline>
       <source src="placeholder.mp4" type="video/mp4" />
       Dein Browser unterstützt kein HTML5-Video.
     </video>
-
-    <!-- Dreieck -->
     <div id="intro-triangle"></div>
-
-    <!-- Text über dem Dreieck -->
     <div id="triangle-text">Bereit für nen Realitätscheck?</div>
   </div>
 
   <!-- Hauptinterface -->
-  <div class="scale-wrapper">
     <div id="interface-wrapper">
       <button id="back-button" style="display: none;">Zurück</button>
 
       <div class="vending-machine">
-        <div class="input-group">
-          <div class="time-label">Verschwendete Zeit:</div>
-          <div id="scale-container">
-            <div id="scale"></div>
-            <div id="figure"></div>
-          </div>
-          <div id="time-display"><span id="time-value">5</span> Stunden</div>
+        <div class="input-group" id="question-group">
+          <label for="user-question">Was ist die größte Zeitverschwendung in deinem Alltag?</label>
+          <input type="text" id="user-question" name="user-question" placeholder="z.B. TikTok, Instagram, Scrollen..." required>
         </div>
+        
+        <div class="input-group" id="email-group">
+          <label for="user-email">Gib deine E-Mail-Adresse ein (optional):</label>
+          <input type="email" id="user-email" name="user-email" placeholder="dein.name@example.com">
+        </div>
+
         <button id="submit">Gib's mir</button>
+
+        <!-- Countdown-Feedback -->
+        <div id="loading-feedback" style="display: none; text-align: center; margin-top: 20px;">
+          <p>Deine Kapsel wird vorbereitet...</p>
+          <p>Bitte warte <span id="countdown">15</span> Sekunden...</p>
+        </div>
+
         <div id="dice-container" style="display: none;">
           <div id="result" style="margin-top: 16px; font-size: 10px;"></div>
         </div>
       </div>
 
-      <div id="capsule-container">
-        <img id="capsule" src="capsulesprite.jpg" alt="Kapsel" />
+      <div id="capsule-container" style="display: none;">
+        <img id="capsule" src="Dogcapsulesprite.png" alt="Kapsel" />
         <div id="teddy-container"></div>
         <div id="result"></div>
       </div>
@@ -82,8 +83,6 @@
     Dein Browser unterstützt kein HTML5-Audio.
   </audio>
 
-  
-
   <audio id="capsule-appear">
     <source src="capsule-appear.wav" type="audio/wav" />
   </audio>
@@ -104,7 +103,6 @@
     <source src="plushy-appear.wav" type="audio/wav" />
   </audio>
 
-  
   <audio id="Idlemusic" loop>
     <source src="ALJAY.mp3" type="audio/wav" />
   </audio>

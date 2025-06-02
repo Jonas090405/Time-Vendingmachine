@@ -11,14 +11,7 @@ body {
   color: #00ffe7;
 }
 
-.time-label {
-  font-family: "Jersey 10", sans-serif;
-  font-size: 40px;        /* vorher: 20px */
-  color: #00ffe7;
-  text-shadow: 0 0 10px #00ffe7;
-  margin-bottom: 200px;
-  animation: text-flicker 3s linear infinite;  /* Text-Flackern hinzufügen */
-}
+
 
 html, body {
   overflow: hidden; /* Verhindert Scrollen */
@@ -62,27 +55,32 @@ html, body {
 
 /* ------------------- Eingabegruppen ------------------- */
 .input-group {
+  margin-bottom: 20px;
   display: flex;
   flex-direction: column;
-  width: 100%;
-  margin-bottom: 16px;
-  align-items: center;
 }
 
-/* ------------------- Slider & Figur ------------------- */
-#scale-container {
-  position: absolute;
-  top: 320px;
-  width: 480px;           /* vorher: 400px */
-  height: 28px;           /* optional: höher für bessere Sichtbarkeit */
-  background: linear-gradient(to right, #ff00c8, #00ffe7);
-  margin: 20px auto;
-  border: 3px solid #ff00e0;
-  border-radius: 12px;
-  box-shadow: 0 0 10px #ff00e0;
-  transform: scale(1.5);
-
+.input-group label {
+  font-weight: bold;
+  margin-bottom: 6px;
 }
+
+.input-group input {
+  padding: 10px;
+  font-size: 1rem;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.input-group input:focus {
+  border-color: #6666ff;
+  box-shadow: 0 0 5px rgba(102, 102, 255, 0.5);
+  outline: none;
+}
+
+
+
 
 #figure {
   position: absolute;
@@ -96,16 +94,6 @@ html, body {
 }
 
 
-/* ------------------- Zeit-Anzeige ------------------- */
-#time-display {
-  margin-top: -200px;
-  font-family: "Jersey 10", sans-serif;
-  font-size: 70px;       
-  color: #00ffe7;
-  text-shadow: 0 0 10px #00ffe7;
-  text-align: center;
-  animation: text-flicker 3s linear infinite;  /* Zeit-Flackern hinzufügen */
-}
 
 /* ------------------- Submit Button ------------------- */
 #submit {

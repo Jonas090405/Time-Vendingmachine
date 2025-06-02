@@ -34,7 +34,6 @@ window.addEventListener('DOMContentLoaded', () => {
   // Funktion zum Entfernen des Intro-Screens
   function removeIntro() {
     const introScreen = document.getElementById('intro-screen');
-    introScreen.style.transition = 'opacity 0.5s ease';
     introScreen.style.opacity = '0';
     setTimeout(() => {
       introScreen.remove();
@@ -49,12 +48,6 @@ window.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('keydown', removeIntro);
 });
 
-let comparisonText = '';
-let time = 5;
-let minTime = 1;
-let maxTime = 40;
-let figure = document.getElementById('figure');
-let timeValue = document.getElementById('time-value');
 let isTyping = false;
 
 // Lautstärke aller Sounds reduzieren
@@ -103,29 +96,6 @@ const capsulePlushiePairs = [
 let selectedCapsule;
 let selectedDragon;
 
-function updateFigurePosition() {
-  let percentage = (time - minTime) / (maxTime - minTime) * 100;
-  figure.style.left = `calc(${percentage}% - 15px)`;  // Bewegt das Element basierend auf der Zeit (Slider)
-  timeValue.textContent = time;
-}
-
-document.addEventListener('keydown', (event) => {
-  if (event.key === 'ArrowLeft' && time > minTime) {
-    time--;
-    updateFigurePosition();
-    startSpriteAnimation('left');
-  } else if (event.key === 'ArrowRight' && time < maxTime) {
-    time++;
-    updateFigurePosition();
-    startSpriteAnimation('right');
-  }
-  clearTimeout(idleTimer);
-  idleTimer = setTimeout(stopSpriteAnimation, 300);
-});
-
-
-updateFigurePosition();
-
 // -------- Submit Event mit Sternen + Logik ------------
 const submitButton = document.getElementById("submit");
 
@@ -163,50 +133,34 @@ selectedDragon = selectedPair.dragon;
   let capsuleContainer = document.getElementById('capsule-container');
   let inputGroup = document.querySelectorAll('.input-group');
   let capsule = document.getElementById('capsule');
-
-  if (time) {
-    let hoursPerWeek = parseInt(time);
-    let lifeExpectancy = 81;
-    let totalActivityHoursInLife = hoursPerWeek * 52 * lifeExpectancy;
-    let randomComparison = Math.floor(Math.random() * 9);
-
-switch (randomComparison) {
-      case 0:
-        comparisonText = `Damit hättest du schon ${(totalActivityHoursInLife / (4000 * 6.5)).toFixed(1)} Bachelorabschlüsse machen können, wenn du aufhörst ständig zu prokrastinieren, du fauler Sack.`;
-        break;
-      case 1:
-        comparisonText = `Das reicht für ${(totalActivityHoursInLife / (24 * 30)).toFixed(1)} Monate nonstop Lernvideos. Dann würdest auch mal was Lernen und endlich über's Grundschulnivau kommen.`;
-        break;
-      case 2:
-        comparisonText = `Genug Zeit für etwa ${(totalActivityHoursInLife / 2).toFixed(1)} Tinder-Dates – und trotzdem 0 Matches, pfff.`;
-        break;
-      case 3:
-        comparisonText = `Reicht für etwa ${(totalActivityHoursInLife / 2).toFixed(1)} Netflix-Filme, aber ohne chill, da du sie eh immer alleine schauen wirst.`;
-        break;
-      case 4:
-        comparisonText = `Damit könntest du ${(totalActivityHoursInLife / (24 * 400)).toFixed(1)} Mal um die Welt reisen - vorausgesetzt, du findest den Weg von der Couch zur Tür überhaupt noch.`;
-        break;
-      case 5:
-        comparisonText = `Das entspricht etwa ${(totalActivityHoursInLife / 0.15).toFixed(1)} Hamburgern. Kommst ja eh kaum die Treppen noch runter, Fettsack. Bestell direkt wieder mit extra Käse, du atmender Fettberg.`;
-        break;
-      case 6:
-        comparisonText = `Theoretisch könntest du die Erde ${(totalActivityHoursInLife / (24 * 365 * 3)).toFixed(1)} Mal zu Fuß umrunden - praktisch gesehen schaffst du es ja grad so zum Kühlschrank. Dazwischen ne 30-minütige Pause.`;
-        break;
-      case 7:
-        comparisonText = `Das wären unglaubliche ${(totalActivityHoursInLife / 0.00278).toFixed(1)} olympische 100-Meter-Sprints. Usain Bolt wäre stolz, dass du daraus einen einzigen 100-Jahres-Sprint gemacht hättes.`;
-        break;
-      case 8:
-        comparisonText = `Du könntest Minecraft Hardcore etwa ${(totalActivityHoursInLife / 50).toFixed(1)} Mal durchspielen – inklusive einem Full-Netherite-Beacon und allen Achievements. Für dich jedoch reine Fiktion und nur im Traum möglich.`;
-        break;
-
+    const userQuestion = document.getElementById('user-question').value.trim();
+    const userEmail = document.getElementById('user-email').value.trim();
+    
+    if (userQuestion === '') {
+      alert("Bitte beantworte die Frage, bevor du fortfährst.");
+      submitButton.disabled = false;
+      return;
     }
-
+  
+    // Optional: einfache E-Mail-Validierung
+    if (userEmail && !/^\S+@\S+\.\S+$/.test(userEmail)) {
+      alert("Bitte gib eine gültige E-Mail-Adresse ein.");
+      submitButton.disabled = false;
+      return;
+    }
+  
+    // Speichere oder nutze die Eingaben:
+    console.log("Antwort:", userQuestion);
+    console.log("E-Mail (optional):", userEmail);
+  
+  
+  
     capsule.src = selectedCapsule.src;
     capsule.style.display = 'block';
     capsule.style.objectPosition = '0 0';
     capsule.style.pointerEvents = 'auto';
 
-    screen.innerHTML = `Zeitangabe: ${time} Stunden pro Woche.<br><br> Öffne deine Kapsel!`;
+    screen.innerHTML = `Öffne deine Kapsel!`;
 
     submitButton.style.display = 'none';
     inputGroup.forEach(group => group.style.display = 'none');
@@ -219,7 +173,7 @@ switch (randomComparison) {
 
     document.getElementById('capsule-appear')?.play();
   }
-}
+
 
 // ----------- Kapsel öffnen und Drache animieren ----------
 document.getElementById('capsule').addEventListener('click', function () {
@@ -262,7 +216,7 @@ document.getElementById('capsule').addEventListener('click', function () {
         animateDragon(selectedDragon.totalFrames, selectedDragon.frameWidth, 200, 7500);
 
         speechBubble.style.display = 'block';
-        typeWriterEffect(speechTextElement, comparisonText, 50);
+        typeWriterEffect(speechTextElement, 50);
 
         screen.innerHTML = `Berechnung abgeschlossen!`;
         backButton.style.display = 'block';
@@ -330,13 +284,10 @@ document.getElementById('back-button').addEventListener('click', function () {
   this.style.display = 'none';
 
   // Position & Layout durch CSS regeln lassen
-  document.getElementById('scale-container').style.display = '';
-  document.getElementById('time-display').style.display = '';
 
   // Aufräumen
   document.querySelectorAll('.star').forEach(star => star.remove());
 
-  updateFigurePosition();
 
   // Nach der Verzögerung den Back-Button und den Submit-Button wieder aktivieren
   setTimeout(() => {
@@ -451,58 +402,4 @@ window.addEventListener('click', function () {
     idleAudio.play();
   }
 }, { once: true });
-
-
-
-let frameIndex = 0;
-let totalFrames = 4;
-let frameWidth = 55;
-let animationInterval;
-let moveDirection = null;
-let idleTimer;
-
-function startSpriteAnimation(direction) {
-  if (animationInterval && moveDirection === direction) return;
-
-  moveDirection = direction;
-
-
-
-  // Bild wechseln je nach Richtung
-  figure.style.backgroundImage = `url('Panda${direction}.png')`;
-
-  // Animation starten
-  clearInterval(animationInterval);
-  animationInterval = setInterval(() => {
-    frameIndex = (frameIndex + 1) % totalFrames;
-    const offsetX = -frameIndex * frameWidth;
-    figure.style.backgroundPosition = `${offsetX}px 0px`;
-  }, 150);
-}
-
-function stopSpriteAnimation() {
-  moveDirection = null;
-  clearInterval(animationInterval);
-  frameIndex = 0;
-  figure.style.backgroundPosition = `0px 0px`;
-}
-
-document.getElementById('slider').addEventListener('input', function () {
-  const value = parseInt(this.value); // Wert des Sliders
-
-  // Wenn der Slider nach rechts geht
-  if (value > 0) {
-    startSpriteAnimation('right');
-  }
-  // Wenn der Slider nach links geht
-  else if (value < 0) {
-    startSpriteAnimation('left');
-  }
-  // Wenn der Slider in der Neutralposition ist
-  else {
-    stopSpriteAnimation();
-  }
-  clearTimeout(idleTimer);
-  idleTimer = setTimeout(stopSpriteAnimation, 300);
-});
 
