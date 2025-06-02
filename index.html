@@ -25,47 +25,49 @@
   <div id="interface-wrapper">
     <button id="back-button" style="display: none;">Zurück</button>
 
-    <div class="vending-machine">
-      <div class="input-group" id="question-group">
-        <label for="user-question">Wenn du in die Zukunft schauen könntest, was sollte dein Zukunfts-Ich bis in 4 Jahren
-          erreicht haben?</label>
-        <input type="text" id="user-question" name="user-question" placeholder="Z.b den Bachelor abschließen" required>
-      </div>
+    <div id="form-section">
+      <div class="vending-machine">
+        <div class="input-group" id="question-group">
+          <label for="user-question">Wenn du in die Zukunft schauen könntest, was sollte dein Zukunfts-Ich bis in 4
+            Jahren
+            erreicht haben?</label>
+          <input type="text" id="user-question" name="user-question" placeholder="Z.b den Bachelor abschließen"
+            required>
+        </div>
 
-      <div class="input-group" id="email-group">
-        <label for="user-email">Gib deine E-Mail-Adresse ein:</label>
-        <input type="email" id="user-email" name="user-email" placeholder="dein.name@example.com">
-      </div>
+        <div class="input-group" id="email-group">
+          <label for="user-email">Gib deine E-Mail-Adresse ein:</label>
+          <input type="email" id="user-email" name="user-email" placeholder="dein.name@example.com">
+        </div>
 
-      <button id="submit">Kapsel einfrieren</button>
-      <div id="countdown-screen" style="display: none;">
-        <div id="countdown-text">
-          Bitte warte <span id="countdown-timer">60</span> Sekunden...
+        <button id="submit">Kapsel einfrieren</button>
+
+        <div id="countdown-screen" style="display:none;">
+          <div id="countdown-message">
+            Wartezeit bis zur nächsten Kapselöffnung:
+          </div>
+          <div id="countdown-timer"></div>
+        </div>
+
+        <div id="dice-container" style="display: none;">
+          <div id="result" style="margin-top: 16px; font-size: 10px;"></div>
         </div>
       </div>
 
+      <div id="capsule-container" style="display: none;">
+        <img id="capsule" src="Dogcapsulesprite.png" alt="Kapsel" />
+        <div id="teddy-container"></div>
+        <div id="result"></div>
+      </div>
 
+      <div id="dragon-container">
+        <img id="dragon" src="Dragonsprite.png" alt="Drachenplüschtier" />
+      </div>
 
-
-      <div id="dice-container" style="display: none;">
-        <div id="result" style="margin-top: 16px; font-size: 10px;"></div>
+      <div id="speech-bubble" style="display: none;">
+        <span id="speech-text"></span>
       </div>
     </div>
-
-    <div id="capsule-container" style="display: none;">
-      <img id="capsule" src="Dogcapsulesprite.png" alt="Kapsel" />
-      <div id="teddy-container"></div>
-      <div id="result"></div>
-    </div>
-
-    <div id="dragon-container">
-      <img id="dragon" src="Dragonsprite.png" alt="Drachenplüschtier" />
-    </div>
-
-    <div id="speech-bubble" style="display: none;">
-      <span id="speech-text"></span>
-    </div>
-  </div>
   </div>
 
   <!-- Retro-Effekte -->

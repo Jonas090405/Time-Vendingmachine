@@ -1,55 +1,5 @@
-const CAPSULE_FREEZE_DURATION = 10; // Sekunden
-/*
-window.addEventListener('DOMContentLoaded', () => {
-  // Haupt-App verstecken
-  const mainApp = document.getElementById('interface-wrapper');
-  if (mainApp) {
-    mainApp.style.display = 'none';
-  }
+const CAPSULE_FREEZE_DURATION = 5; // Sekunden
 
-  // Intro-Screen erstellen
-  const introScreen = document.createElement('div');
-  introScreen.id = 'intro-screen';
-
-  // Hintergrundvideo
-  const video = document.createElement('video');
-  video.src = 'placeholder.mp4'; // Pfad anpassen
-  video.autoplay = true;
-  video.loop = true;
-  video.muted = true;
-  video.playsInline = true;
-  introScreen.appendChild(video);
-
-  // Dreieck in der unteren linken Ecke
-  const triangle = document.createElement('div');
-  triangle.id = 'intro-triangle';
-
-  // Text im Dreieck
-  const triangleText = document.createElement('div');
-  triangleText.id = 'triangle-text';
-  triangleText.textContent = 'Bereit Zeit zu verschwenden?';
-
-  triangle.appendChild(triangleText);
-  introScreen.appendChild(triangle);
-  document.body.appendChild(introScreen);
-
-  // Funktion zum Entfernen des Intro-Screens
-  function removeIntro() {
-    const introScreen = document.getElementById('intro-screen');
-    introScreen.style.opacity = '0';
-    setTimeout(() => {
-      introScreen.remove();
-      if (mainApp) mainApp.style.display = ''; // Zeige die Haupt-App
-    }, 500);
-    window.removeEventListener('keydown', removeIntro);
-    window.removeEventListener('click', removeIntro);
-  }
-
-  // Auf Klick auf den Intro-Screen oder Tastendruck Intro entfernen
-  introScreen.addEventListener('click', removeIntro);
-  window.addEventListener('keydown', removeIntro);
-});
-*/
 function safeShowCapsule() {
   const capsule = document.getElementById('capsule');
   const container = document.getElementById('capsule-container');
@@ -70,8 +20,6 @@ window.addEventListener('DOMContentLoaded', () => {
     document.getElementById('plushy-talk'),
     document.getElementById('click-sound'),
     document.getElementById('plush-appear'),
-    document.getElementById('Idlemusic'),
-
   ];
 
   sounds.forEach(sound => {
@@ -84,6 +32,12 @@ const cheekyComments = [
   "schauen wir mal was du dir so vorgenommen hast und es mal wieder nicht eingehalt hast:",
   "Mal schauen welche Vorsätze du dir gesetzt hast (und nicht eingehalten hast):",
   "Erinnerst du dich noch an deine Vorsätze? Wahrscheinlich nicht, oder?:",
+  "Na, wie sieht’s aus mit deinen großen Plänen von damals? Schon vergessen, was?:",
+  "Zeit, deinen alten Vorsätzen ins Gesicht zu schauen:",
+  "Trommelwirbel... und hier kommen deine gescheiterten Vorsätze:",
+  "Das hier könnte peinlich werden… deine damaligen Ziele warten:",
+  "Erinnerst du dich noch? Nein? Umso besser, wir helfen dir auf die Sprünge:",
+  "Bereit für eine kleine Reise in deine vergessenen Pläne?:",
 ];
 
 
@@ -201,22 +155,21 @@ function showCapsule() {
   document.getElementById('submit').style.display = 'none';
   document.getElementById('dice-container').style.display = 'none';
   document.getElementById('teddy-container').style.display = 'none';
-  document.querySelector('.vending-machine').style.display = 'none';
-
   document.getElementById('capsule-appear')?.play();
 }
 
 
 function showCountdownScreen() {
   const countdownScreen = document.getElementById('countdown-screen');
-  const countdownText = document.getElementById('countdown-text');
+  const countdownText = document.getElementById('countdown-message');  // neuer Text-Container
   const countdownTimer = document.getElementById('countdown-timer');
+
+  // Text setzen (optional)
+  countdownText.textContent = "Bitte warte noch:";
 
   document.getElementById('capsule-container').style.display = 'none';
   document.querySelectorAll('.input-group').forEach(group => group.style.display = 'none');
   document.getElementById('submit').style.display = 'none';
-  document.getElementById('dice-container').style.display = 'none';
-  document.getElementById('teddy-container').style.display = 'none';
   document.querySelector('.vending-machine').style.display = 'none';
 
   countdownScreen.style.display = 'block';
@@ -229,28 +182,28 @@ function showCountdownScreen() {
     const seconds = Math.ceil(remaining / 1000);
     countdownTimer.textContent = `${seconds} Sekunden`;
 
-if (remaining <= 0) {
-  clearInterval(interval);
-  localStorage.removeItem("capsuleFreezeUntil");
-  countdownScreen.style.display = 'none';
+    if (remaining <= 0) {
+      clearInterval(interval);
+      localStorage.removeItem("capsuleFreezeUntil");
+      countdownScreen.style.display = 'none';
 
-  // E-Mail senden mit statischem Inhalt aus Template
-  const email = localStorage.getItem("userEmail") || '';
+      // E-Mail senden mit statischem Inhalt aus Template
+      const email = localStorage.getItem("userEmail") || '';
 
-  if (email) {
-    emailjs.send('service_rojceoa', 'template_tqsybkb', {
-      to_email: email
-    }, '5w_nLDBqiwnNhvAKy')
-    .then(() => {
-      console.log('Email erfolgreich gesendet!');
-    }, (error) => {
-      console.error('Email-Fehler:', error);
-    });
-  }
+      if (email) {
+        emailjs.send('service_rojceoa', 'template_tqsybkb', {
+          to_email: email
+        }, '5w_nLDBqiwnNhvAKy')
+          .then(() => {
+            console.log('Email erfolgreich gesendet!');
+          }, (error) => {
+            console.error('Email-Fehler:', error);
+          });
+      }
 
-  showCapsule();
-}
-}, 1000);
+      showCapsule();
+    }
+  }, 1000);
 
 }
 // ----------- Kapsel öffnen und Drache animieren ----------
@@ -490,12 +443,12 @@ window.addEventListener('click', function () {
   const idleAudio = document.getElementById('Idlemusic');
 
   if (bgAudio.paused) {
-    bgAudio.volume = 0.08; // Leiser machen (0.0 bis 1.0)
+    bgAudio.volume = 0.02; // Leiser machen (0.0 bis 1.0)
     bgAudio.play();
   }
 
   if (idleAudio.paused) {
-    idleAudio.volume = 0.07;
+    idleAudio.volume = 0.01;
     idleAudio.play();
   }
 }, { once: true });
