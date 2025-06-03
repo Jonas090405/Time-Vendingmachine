@@ -17,7 +17,7 @@ html {
   /* Verhindert Scrollen */
   font-size: 24px;
   /* Increase from default 16px */
-   background-color: #1a0933; /* dunkler Overflow für Mobile Geräte */
+  background-color: #1a0933; /* dunkler Overflow für Mobile Geräte */
 
 }
 
